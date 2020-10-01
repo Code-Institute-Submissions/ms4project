@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+  <html>
+    <head>
+      {% block corecss %}
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      {% endblock %}
+
+      {% block extra_css %}
+      <link rel="stylesheet" href="{% static 'css/base.css' %}">
+      {% endblock %}
+
+      {% block corejs %}
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      {% endblock %}
+
+      {% block extra_js %}
+      {% endblock %}
+
+      {% block meta %}
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      {% endblock %}
+
+      {% block extra_meta %}
+      {% endblock %}
+
+      <title>Hit 'n' Hops {% block extra_title %}{% endblock %}</title>
+    </head>
+    <body>
+        <header class="container nav-wrapper">
+            <div id="topnav" class="row white hide-on-small-only">
+                <div class="col s12 l4">
+                    <a href="{% url 'home' %}" class="logo">
+                        <img src="{% static 'images/hnhlogo.png' %}" alt="logo"/>
+                    </a>
+                </div>
+                
+                <div class="col s12 l4">
+                    <form method="GET" action="">
+                        <div class="input-field">
+                            <input id="search" type="search" required>
+                            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                            <i class="material-icons">close</i>
+                        </div>
+                    </form>    
+                </div>
+                <div class="col s12 l4">
+
+                </div>
+            </div>
+        </header>
+
+        {% if messages %}
+            <div class="message-container"></div>
+        {% endif %}
+
+        {% block page_header %}
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+
+        {% block postloadjs %}
+            <script>
+                M.AutoInit()
+            </script>
+        {% endblock %}
+    
+
+    </body>
+  </html>
