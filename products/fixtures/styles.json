@@ -1,0 +1,12 @@
+[{"pk": 1, "model": "products.style", "fields": {"name": "oatmeal_stout", "friendly_name": "Oatmeal Stout"}},
+ {"pk": 2, "model": "products.style", "fields": {"name": "double_ipa", "friendly_name": "Double IPA"}},
+ {"pk": 3, "model": "products.style", "fields": {"name": "ne_ipa", "friendly_name": "New England IPA"}},
+ {"pk": 4, "model": "products.style", "fields": {"name": "ipa", "friendly_name": "IPA"}},
+ {"pk": 5, "model": "products.style", "fields": {"name": "sweet_stout", "friendly_name": "Sweet Stout"}},
+ {"pk": 6, "model": "products.style", "fields": {"name": "american_ipa", "friendly_name": "American IPA"}},
+ {"pk": 7, "model": "products.style", "fields": {"name": "trappist", "friendly_name": "Trappist"}},
+ {"pk": 8, "model": "products.style", "fields": {"name": "lager", "friendly_name": "Lager"}},
+ {"pk": 9, "model": "products.style", "fields": {"name": "pilsner", "friendly_name": "Pilsner"}},
+ {"pk": 10, "model": "products.style", "fields": {"name": "dunkel", "friendly_name": "Dunkel"}},
+ {"pk": 11, "model": "products.style", "fields": {"name": "doppelbock", "friendly_name": "Doppelbock"}},
+ {"pk": 13, "model": "products.style", "fields": {"name": "porter", "friendly_name": "Porter"}}]
