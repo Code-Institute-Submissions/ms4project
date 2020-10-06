@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container center-align">
+        <div class="row">
+            <div class="col">
+                <h2 class="center-align header">Beers</h2>
+                <hr>                          
+            </div>
+        </div>
+        <div class="row">
+            {% for beer in beers %}
+                <div class="col s12 m6 l4 xl3">
+                    <div class="large card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                        {% if beer.image %}
+                            <img class="activator" src="{{ beer.image_url }}" alt="{{ beer.name }}">
+                        {% else %}
+                            <img class="activator" src="{{ MEDIA_URL }}noimage.png" alt="{{ beer.name }}">
+                        {% endif %}
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4">{{ beer.name }}<i class="material-icons right">more_vert</i></span>
+                            <p>£{{ beer.price }}</p>
+                            <p>{{ beer.abv }}%</p>
+                            <p>{{ beer.volume }}ml</p>
+                            <p>{{ beer.rating }}<i class="material-icons star">star</i></p>
+                            
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">{{ beer.brewery.friendly_name }}<i class="material-icons right">close</i></span>
+                            <p>{{ beer.style.friendly_name }}</p>
+                            <p>{{ beer.description }}</p>
+                            <div class="div center-align">
+                                <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add_shopping_cart</i></a>
+                                <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">info_outline</i></a>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

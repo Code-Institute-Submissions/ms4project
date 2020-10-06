@@ -16,7 +16,7 @@ class Brewery(models.Model):
 
     class Meta:
         verbose_name_plural = 'Breweries'
-        
+
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, blank=True)
     country = models.CharField(max_length=254)
@@ -45,6 +45,7 @@ class Beer(models.Model):
     abv = models.DecimalField(max_digits=6, decimal_places=1,
                               null=True, blank=True)
     image = models.ImageField(blank=True)
+    image_url = models.URLField(max_length=1200, blank=True)
     brewery = models.ForeignKey('Brewery', null=True,
                                 blank=True, on_delete=models.SET_NULL)
 

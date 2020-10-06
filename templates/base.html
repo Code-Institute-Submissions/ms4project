@@ -39,7 +39,7 @@
                 </a>
                 <ul class="right hide-on-med-and-down">
                     <li>
-                        <a href="#"><i class="material-icons">store</i></a>
+                        <a href="{% url 'beers' %}"><i class="material-icons">store</i></a>
                     </li>
                     <li>
                         <form method="GET" action="#">
@@ -97,27 +97,27 @@
                 <a href="#" data-target="slide-out" class="sidenav-trigger"><img src="{% static 'images/hnhlogo.png' %}" alt="logo"/></a>
                 <!-- Dropdown Structure -->
                 <ul id="dropdown1" class="dropdown-content">
-                    {% if request.user.is.authenticated %}
-                    {% if request.user.is.superuser %}
-                        <a href="" class="dropdown-item">Product Management</a>
-                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser %}
+                            <a href="" class="dropdown-item">Product Management</a>
+                        {% endif %}
                         <a href="" class="dropdown-item">My Profile</a>
-                        <a href="{% url 'account_logout' %]" class="dropdown-item">Log Out</a>
+                        <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
                     {% else %}
-                        <a href="{% url 'account_signup' %]" class="dropdown-item"><span>Register</span></a>
-                        <a href="{% url 'account_login' %]" class="dropdown-item"><span>Log In</span></a>
+                        <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                       <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
                     {% endif %}
                 </ul>
                 <ul id="dropdown2" class="dropdown-content">
-                    {% if request.user.is.authenticated %}
-                    {% if request.user.is.superuser %}
-                        <a href="" class="dropdown-item">Product Management</a>
-                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser %}
+                            <a href="" class="dropdown-item">Product Management</a>
+                        {% endif %}
                         <a href="" class="dropdown-item">My Profile</a>
-                        <a href="{% url 'account_logout' %]" class="dropdown-item">Log Out</a>
+                        <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
                     {% else %}
-                        <a href="{% url 'account_signup' %]" class="dropdown-item">Register</a>
-                        <a href="{% url 'account_login' %]" class="dropdown-item">Log In</a>
+                        <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                       <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
                     {% endif %}
                 </ul>
             </div>
