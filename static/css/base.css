@@ -31,6 +31,11 @@ html {
     margin: 1rem;
 }
 
+.btn-pick {
+    width: 80%;
+    margin: 2rem 2rem;
+}
+
 
 
 /*--------------------------------------------------------------------------------------------------beer detail page*/
@@ -107,8 +112,7 @@ p {
 }
 
 footer.page-footer {
-    margin: 2rem 0 0;
-
+    margin: 0;
 }
 
 @media (min-width: 1500px) {

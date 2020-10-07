@@ -5,13 +5,6 @@
             <a href="{% url 'home' %}"><i class="material-icons">home</i>Homepage</a>
         </li>
         <li>
-            <form method="GET" action="{% url 'beers' %}">
-                <div class="input-group">
-                    <input class="form-control" id="search1" name="q" placeholder="Explore..." type="search" required>
-                </div>
-            </form>
-        </li>
-        <li>
             <a class="dropdown-trigger text-black" href="#" data-target="dropdown2"><i class="material-icons">person</i>My Account</a>
         </li>
         <li>
@@ -27,6 +20,13 @@
                     {% endif %}
               </p>
             </a>    
+        </li>
+        <li>
+            <form method="GET" action="{% url 'beers' %}">
+                <div class="input-group">
+                    <input class="form-control" id="search1" name="q" placeholder="Explore..." type="search" required>
+                </div>
+            </form>
         </li>
     </ul>
                 
