@@ -42,7 +42,7 @@
                         <a href="{% url 'beers' %}"><i class="material-icons">store</i></a>
                     </li>
                     <li>
-                        <form method="GET" action="#">
+                        <form method="GET" action="{% url 'beers' %}">
                             <div class="input-group">
                                 <input class="form-control" id="search" name="q" placeholder="Explore..." type="search" required>
                                 
@@ -68,38 +68,10 @@
                         </a>
                     </li>
                 </ul>
-                <ul id="slide-out" class="sidenav">
-                    <li>
-                        <form method="GET" action="#">
-                            <div class="input-group">
-                                <input class="form-control" id="search1" name="q" placeholder="Explore..." type="search" required>
-                                
-                            </div>
-                        </form>
-                    </li>
-                    <li>
-                        <a class="dropdown-trigger text-black" href="#" data-target="dropdown2"><i class="material-icons">person</i>My Account</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'beers' %}"><i class="material-icons">store</i>Beer Store</a>
-                    </li>
-                    <li>
-                        <a class="{% if grand_total %} text-blue font-weight-bold {% else %} text-black {% endif %} nav-link" href="#">
-                            <i class="material-icons">shopping_basket</i>My Basket
-                            <p class="my-0">
-                                {% if grand_total %}
-                                    £{{ grand_total|floatformat:2 }}
-                                {% else %}
-                                {% endif %}
-                            </p>
-                        </a>    
-                    </li>
-       
-                </ul>
+
+                {% include "includes/mobile_nav.html" %}
                 
-                <a href="#" data-target="slide-out" class="sidenav-trigger"><img src="{% static 'images/hnhlogo.png' %}" alt="logo"/></a>
-                <!-- Dropdown Structure -->
-                <div class="dropdown-container">    
+                <div class="dropdown-container">
                     <ul id="dropdown1" class="dropdown-content">
                         {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser %}
@@ -113,20 +85,7 @@
                         {% endif %}
                     </ul>
                 </div>
-                <div class="dropdown-container">
-                    <ul id="dropdown2" class="dropdown-content">
-                        {% if request.user.is_authenticated %}
-                            {% if request.user.is_superuser %}
-                                <a href="" class="dropdown-item">Product Management</a>
-                            {% endif %}
-                            <a href="" class="dropdown-item">My Profile</a>
-                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
-                        {% else %}
-                            <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
-                        <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
-                        {% endif %}
-                    </ul>
-                </div>
+
             </div>
         </nav>
         
