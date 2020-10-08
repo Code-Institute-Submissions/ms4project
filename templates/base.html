@@ -53,7 +53,7 @@
                         <a class="dropdown-trigger" href="#" data-target="dropdown1"><i class="material-icons">person</i></a>
                     </li>
                     <li>
-                        <a class="{% if grand_total %} text-info font-weight-bold {% else %} text-black {% endif %} nav-link" href="#">
+                        <a class="{% if grand_total %} text-info font-weight-bold {% else %} text-black {% endif %} nav-link" href="{% url 'view_cart' %}">
                             <div class="center">
                                 <div>
                                     <i class="material-icons">shopping_basket</i>

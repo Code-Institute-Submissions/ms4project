@@ -11,7 +11,7 @@
             <a href="{% url 'beers' %}"><i class="material-icons">store</i>Beer Store</a>
         </li>
         <li>
-            <a class="{% if grand_total %} text-blue font-weight-bold {% else %} text-black {% endif %} nav-link" href="#">
+            <a class="{% if grand_total %} text-blue font-weight-bold {% else %} text-black {% endif %} nav-link" href="{% url 'view_cart' %}">
                 <i class="material-icons">shopping_basket</i>My Basket
                 <p class="my-0">
                     {% if grand_total %}
