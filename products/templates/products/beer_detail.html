@@ -31,21 +31,24 @@
                     <h6>{{ beer.description }}</h6>
                 </div>
                  <div class="row center-align">
-                    <div class="col s4">
+                    <div class="col s6 l3">
                         <p><b>Style</b>: {{ beer.style.friendly_name }}</p>
                     </div>
-                    <div class="col s4">
+                    <div class="col s6 l3">
                         <p><b>ABV.</b>: {{ beer.abv }}%</p>
                     </div>
-                    <div class="col s4">
+                    <div class="col s6 l3">
                         <p><b>Vol.</b>: {{ beer.volume }}ml</p>
+                    </div>
+                    <div class="col s6 l3">
+                        <p><b>Rating</b>: {{ beer.rating }}/5</p>
                     </div>
                 </div>  
                 <hr>
                 <div class="button-container">
-                    <a class="truncate btn-large bd-btn waves-effect waves-light black"><i class="material-icons right">add_shopping_cart</i>add to cart</a>
-                    <a href="{% url 'beer_detail' beer.id %}" class="btn-large bd-btn waves-effect waves-light black"><i class="material-icons right">star</i>rate beer</a>
-                    <a href="{% url 'beer_detail' beer.id %}" class="btn-large bd-btn waves-effect waves-light black"><i class="material-icons right">rate_review</i>review</a>
+                    <a class="truncate btn-large bd-btn waves-effect waves-light"><i class="material-icons right">add_shopping_cart</i>add to cart</a>
+                    <a href="{% url 'beer_detail' beer.id %}" class="btn-large bd-btn waves-effect waves-light"><i class="material-icons right">star</i>rate beer</a>
+                    <a href="{% url 'beer_detail' beer.id %}" class="btn-large bd-btn waves-effect waves-light"><i class="material-icons right">rate_review</i>review</a>
                 </div>
                 <hr>             
             </div>

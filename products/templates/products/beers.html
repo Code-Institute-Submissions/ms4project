@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block page_header %}
+    <a name="top"></a>
     <div class="container header-container">
         <div class="row">
         </div>
@@ -15,68 +16,54 @@
             <h2 class="header center-align">Our Beer Collection</h2>   
             <hr>                     
         </div>
+
+<!--  -----------------------------------------------------------------------------------------------BEER SORTING-->
+
         <div class="row center-align">
             <div class="col s12 m4">
-                <a class="btn btn-pick red darken-4 large modal-trigger" href="#style">Choose Style</a>
-
-                <!-- Modal Structure -->
-                <div id="style" class="modal">
-                    <div class="modal-content">
-                        <h4>Pick Your Style</h4>
-                        {% for style in styles %}
-                            <form action="#">
-                                <p>
-                                    <label>
-                                        <input name="group1" type="radio"/>
-                                        <span>{{ style.friendly_name }}</span>
-                                    </label>
-                                </p>
-                            </form>
-                        {% endfor %}
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col s12 m4">
-                <a class="btn btn-pick large modal-trigger red darken-4" href="#brewery">Choose Brewery</a>
-
-                <!-- Modal Structure -->
-                <div id="brewery" class="modal">
-                    <div class="modal-content">
-                        <h4>Choose a Brewery</h4>
-                        {% for brewery in breweries %}
-                            <form action="#">
-                                <p>
-                                    <label>
-                                        <input name="group1" type="radio"/>
-                                        <span>{{ brewery.friendly_name }}</span>
-                                    </label>
-                                </p>
-                            </form>
-                        {% endfor %}
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-                    </div>
-                </div>    
-            </div>
-            <div class="col s12 m4">
-                <a class="dropdown-trigger btn btn-pick large modal-trigger red darken-4" href="#" data-target="dropdown3">Sort By...</a>
+                <a class="dropdown-trigger btn btn-pick large modal-trigger red darken-4" href="#" data-target="dropdown3">Styles</a>
 
                 <!-- Dropdown Structure -->
                 <ul id="dropdown3" class="dropdown-content">
-                        <li><a href="#!">Name</a></li>
-                        <li><a href="#!">Name</a></li>
-                        <li><a href="#!">Price</a></li>
-                        <li><a href="#!">Style</a></li>
-                        <li><a href="#!">Abv.</a></li>
-                        <li><a href="#!">Rating</li>
-                </ul>
+                    {% for style in current_styles %}
+                        <li><a href="{% url 'beers' %}?style={{ style.id }}" class="dropdown-item">{{ style.friendly_name }}</a></li>
+                    {% endfor %}
+                </ul>   
+            </div>
+            <div class="col s12 m4">
+                <a class="dropdown-trigger btn btn-pick large red darken-4" href="#" data-target="dropdown4">Breweries</a>
+
+                <!-- Dropdown Structure -->
+                <ul id="dropdown4" class="dropdown-content">
+                    {% for brewery in breweries %}
+                        <li><a href="{% url 'beers' %}?brewery={{ brewery.id }}" class="dropdown-item">{{ brewery.friendly_name }}({{ brewery.country }})</a></li>
+                    {% endfor %}
+                </ul>   
+            </div>
+            <div class="col s12 m4">
+                <a class="dropdown-trigger btn btn-pick large red darken-4" href="#" data-target="dropdown5">Sort By...</a>
+
+                <!-- Dropdown Structure -->
+                <div class="input-field col s12">
+                    <ul id="dropdown5" class="dropdown-content">                    
+                        <li><a href="{% url 'beers' %}?sort=price&direction=desc" class="dropdown-item">Price (high-low)</a></li>
+                        <li><a href="{% url 'beers' %}?sort=price&direction=asc" class="dropdown-item">Price (low-high)</a></li>                        
+                        <li><a href="{% url 'beers' %}?sort=name&direction=desc" class="dropdown-item">Name (A-Z)</a></li>
+                        <li><a href="{% url 'beers' %}?sort=name&direction=asc" class="dropdown-item">Name (Z-A)</a></li>
+                        <li><a href="{% url 'beers' %}?sort=rating&direction=desc" class="dropdown-item">Rating (high-low)</a></li>
+                        <li><a href="{% url 'beers' %}?sort=rating&direction=asc" class="dropdown-item">Rating (low-high)</a></li>
+                        <li><a href="{% url 'beers' %}?sort=abv&direction=desc" class="dropdown-item">Abv. (high-low)</a></li>
+                        <li><a href="{% url 'beers' %}?sort=abv&direction=asc" class="dropdown-item">Abv. (low-high)</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
+
+
+<!--  -----------------------------------------------------------------------------------------------BEER SORTING-->
+
+<!--  -----------------------------------------------------------------------------------------------BEER LIST-->
+
         <div class="row">
             {% for beer in beers %}
                 <div class="col s12 m6 l4 xl3">
@@ -108,7 +95,12 @@
                     </div>
                 </div>  
             {% endfor %}
+            <a href="#top"><i class="material-icons btn btt-link">arrow_drop_up</i></a>
         </div>
+
+        
+<!--  -----------------------------------------------------------------------------------------------/BEER LIST-->
+
         <hr>  
     </div>
 {% endblock %}

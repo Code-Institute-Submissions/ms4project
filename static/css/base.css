@@ -16,14 +16,33 @@ html {
     top: -4rem;
 }
 
+.header-container {
+    height: 1rem;
+    top: 0;
+}
+
+.bg-image {
+    width: 100%;
+}
+
 /*--------------------------------------------------------------------------------------------------beers page*/
+
+.btt-link {
+    height: 42px;
+    width: 42px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #fff;
+    color: #000;
+}
 
 .star {
     font-size: 15px;
 }
 
 .beer-display {
-    height: 19rem;
+    height: 18rem;
     object-fit: contain
 }
 
@@ -32,14 +51,11 @@ html {
 }
 
 .btn-pick {
-    width: 80%;
-    margin: 2rem 2rem;
+    width: 90%;
+    margin: 2rem 1rem;
 }
 
-
-
 /*--------------------------------------------------------------------------------------------------beer detail page*/
-
 
 .beer-detail {
     padding: 6rem 2rem;
@@ -63,7 +79,14 @@ html {
 .bd-btn {
     margin: 0.5rem 1rem;
     width: 15rem;
+    background-color: #b71c1c;
 }
+
+.bd-btn:hover {
+    background-color: #e53935;
+}
+
+/*---------------------------------------------------------------------------------------------------parallax*/
 
 nav ul a,
 nav .brand-logo {
@@ -84,7 +107,7 @@ p {
 }
 
 .parallax-container {
-    min-height: 380px;
+    min-height: 50vh;
     line-height: 0;
     height: auto;
 }
@@ -117,6 +140,6 @@ footer.page-footer {
 
 @media (min-width: 1500px) {
     .container {
-        width: 90%;
+        width: 100%;
     }  
 }
