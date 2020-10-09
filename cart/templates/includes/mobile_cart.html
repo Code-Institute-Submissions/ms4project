@@ -16,7 +16,27 @@
                 <tr>
                     <td>{{ beer.beer }}</td>
                     <td>{{ beer.beer.style.friendly_name }}</td>
-                    <td class="center-align">{{ beer.quantity }}</td>
+                    
+                    <td class="center-align">
+                        <form class="row form update-form" method="POST" action="{% url 'adjust_cart' beer.beer_id %}">
+                            <div class=" col s6 form-group">
+                                <div class="qty-select">
+                                    <input class="form-control qty_input center-align" type="number"
+                                        name="quantity" value="{{ beer.quantity }}" min="1" max="99"
+                                        data-item_id="{{ beer.id }}"
+                                        id="id_qty_{{ beer.id }}">
+                                </div>
+                            </div>
+                            <div class="col s6">
+                                <div class="row">    
+                                    <a href="#" class="update-link small green-text">update</a>
+                                </div>
+                                <div class="row">
+                                    <a href="#" class="remove-item small red-text" id="remove_{{ beer.beer_id }}">remove</a>
+                                </div>
+                            </div> 
+                        </form>       
+                    </td>
                     <td>£{{ beer.beer.price }}</td>
                 </tr>
             </tbody>

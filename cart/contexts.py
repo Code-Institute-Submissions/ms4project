@@ -11,14 +11,14 @@ def cart_contents(request):
     beer_count = 0
     cart = request.session.get('cart', {})
 
-    for beer_id, beer_data in cart.items():
-        if isinstance(beer_data, int):
+    for beer_id, quantity in cart.items():
+        if isinstance(quantity, int):
             beer = get_object_or_404(Beer, pk=beer_id)
-            total += beer_data * beer.price
-            beer_count += beer_data
+            total += quantity * beer.price
+            beer_count += quantity
             cart_items.append({
                 'beer_id': beer_id,
-                'quantity': beer_data,
+                'quantity': quantity,
                 'beer': beer,
             })
 

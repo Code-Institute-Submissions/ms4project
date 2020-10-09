@@ -19,7 +19,7 @@
         <div class="row cart-container hide-on-small-only">
             {% if cart_items %}
 
-                <table class="stripped">
+                <table class="striped">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -39,7 +39,25 @@
                             <td>{{ beer.beer.style.friendly_name }}</td>
                             <td>{{ beer.beer.abv }}%</td>
                             <td>{{ beer.beer.volume }}ml</td>
-                            <td class="center-align">{{ beer.quantity }}</td>
+                            <td class="center-align">
+                                <div class="row">
+                                    <form class="form col s4 update-form" method="POST" action="{% url 'adjust_cart' beer.beer_id %}">
+                                        {% csrf_token %}
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="qty-select">
+                                                        <input class="form-control qty_input center-align" type="number"
+                                                            name="quantity" value="{{ beer.quantity }}" min="0" max="99"
+                                                            data-item_id="{{ beer.id }}"
+                                                            id="id_qty_{{ beer.id }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </form>     
+                                    <a href="#" class="update-link submit cart-link green-text">update</a>
+                                </div> 
+                                          
+                            </td>
                             <td>£{{ beer.beer.price }}</td>
                         </tr>
                     </tbody>
