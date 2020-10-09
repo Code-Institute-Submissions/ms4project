@@ -1,9 +1,9 @@
 <!DOCTYPE html>
+<a name="top"></a>
 {% extends 'base.html' %}
 {% load static %}
 
 {% block page_header %}
-    <a name="top"></a>
     <div class="container header-container">
         <div class="row">
         </div>
@@ -25,9 +25,11 @@
 
                 <!-- Dropdown Structure -->
                 <ul id="dropdown3" class="dropdown-content">
-                    {% for style in current_styles %}
+                
+                    {% for style in styles %}
                         <li><a href="{% url 'beers' %}?style={{ style.id }}" class="dropdown-item">{{ style.friendly_name }}</a></li>
                     {% endfor %}
+                
                 </ul>   
             </div>
             <div class="col s12 m4">
@@ -35,9 +37,11 @@
 
                 <!-- Dropdown Structure -->
                 <ul id="dropdown4" class="dropdown-content">
+                
                     {% for brewery in breweries %}
                         <li><a href="{% url 'beers' %}?brewery={{ brewery.id }}" class="dropdown-item">{{ brewery.friendly_name }}({{ brewery.country }})</a></li>
                     {% endfor %}
+                
                 </ul>   
             </div>
             <div class="col s12 m4">
@@ -48,8 +52,8 @@
                     <ul id="dropdown5" class="dropdown-content">                    
                         <li><a href="{% url 'beers' %}?sort=price&direction=desc" class="dropdown-item">Price (high-low)</a></li>
                         <li><a href="{% url 'beers' %}?sort=price&direction=asc" class="dropdown-item">Price (low-high)</a></li>                        
-                        <li><a href="{% url 'beers' %}?sort=name&direction=desc" class="dropdown-item">Name (A-Z)</a></li>
-                        <li><a href="{% url 'beers' %}?sort=name&direction=asc" class="dropdown-item">Name (Z-A)</a></li>
+                        <li><a href="{% url 'beers' %}?sort=name&direction=asc" class="dropdown-item">Name (A-Z)</a></li>
+                        <li><a href="{% url 'beers' %}?sort=name&direction=desc" class="dropdown-item">Name (Z-A)</a></li>
                         <li><a href="{% url 'beers' %}?sort=rating&direction=desc" class="dropdown-item">Rating (high-low)</a></li>
                         <li><a href="{% url 'beers' %}?sort=rating&direction=asc" class="dropdown-item">Rating (low-high)</a></li>
                         <li><a href="{% url 'beers' %}?sort=abv&direction=desc" class="dropdown-item">Abv. (high-low)</a></li>
@@ -70,18 +74,20 @@
                     <div class="large card">
                         <div class="card-image waves-effect waves-block waves-light">
                         {% if beer.image %}
-                            <img class="beer-display activator" src="{{ beer.image_url }}" alt="{{ beer.name }}">
+                        <a href="{% url 'beer_detail' beer.id %}">
+                            <img class="beer-display" src="{{ beer.image_url }}" alt="{{ beer.name }}">
+                        </a>
                         {% else %}
                             <img class="beer_display activator" src="{{ MEDIA_URL }}noimage.png" alt="{{ beer.name }}">
                         {% endif %}
                         </div>
                         <div class="card-content">
-                            <a href="#" class="material-icons activator right">more_vert</a>
-                            <a href="{% url 'beer_detail' beer.id %}" class="card-title grey-text text-darken-4">{{ beer.name }}</a>                   
-                            <p>£{{ beer.price }}</p>
+                            <a href="#" class="red-text text-darken-4 material-icons activator right">more_vert</a>
+                            <a href="#" class="activator card-title grey-text text-darken-4">{{ beer.name }}</a>                   
                             <p>{{ beer.abv }}%</p>
                             <p>{{ beer.volume }}ml</p>
                             <p>{{ beer.rating }}<i class="material-icons star">star</i></p>
+                            <p><b>£{{ beer.price }}</b></p>
                         </div>
                         <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4">{{ beer.brewery.friendly_name }}<i class="material-icons right">close</i></span>
@@ -95,7 +101,6 @@
                     </div>
                 </div>  
             {% endfor %}
-            <a href="#top"><i class="material-icons btn btt-link">arrow_drop_up</i></a>
         </div>
 
         
@@ -103,4 +108,5 @@
 
         <hr>  
     </div>
+<a href="#" class=" btn btt-link"><i class="material-icons btt-icon">arrow_upward</i></a>
 {% endblock %}

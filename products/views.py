@@ -14,6 +14,7 @@ def all_beers(request):
     brewery = None
     sort = None
     direction = None
+    sortkey = None
 
     if request.GET:
         if 'sort' in request.GET:
@@ -29,7 +30,7 @@ def all_beers(request):
                 direction = request.GET['direction']
                 if direction == 'desc':
                     sortkey = f'-{sortkey}'
-        beers = beers.order_by(sortkey)
+            beers = beers.order_by(sortkey)
 
         if 'brewery' in request.GET:
             brewery = request.GET['brewery'].split(',')

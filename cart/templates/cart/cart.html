@@ -16,27 +16,42 @@
             <h2 class="header center-align">Your Shopping Cart</h2>   
             <hr>                     
         </div>
-        <div class="row valign-wrapper cart-container">
-            <div class="col center-align">
+        <div class="row cart-container">
             {% if cart_items %}
-                <table>
+
+                <table class="stripped">
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Brewery</th>
+                            <th>Style</th>
+                            <th>ABV.</th>
+                            <th>Vol.</th>
+                            <th>Quantity</th>
+                            <th>Price</th>                         
                         </tr>
                     </thead>
-
+                {% for beer in cart_items %}
                     <tbody>
                         <tr>
-                            <td>Alvin</td>
+                            <td>{{ beer.beer }}</td>
+                            <td>{{ beer.beer.brewery.friendly_name }}</td>
+                            <td>{{ beer.beer.style.friendly_name }}</td>
+                            <td>{{ beer.beer.abv }}%</td>
+                            <td>{{ beer.beer.volume }}ml</td>
+                            <td class="center-align">{{ beer.quantity }}</td>
+                            <td>£{{ beer.beer.price }}</td>
                         </tr>
                     </tbody>
+                {% endfor %}
                 </table>
+                <h6 class="right-align">Delivery = £{{ delivery | floatformat:2 }}</h6>
+                <h5 class="right-align">Total = <b>£{{ grand_total | floatformat:2 }}</b></h5>
             {% else %}                
                     <h4 class="">Your cart is empty.</h4>
                     <a href="{% url 'beers' %}" class="btn large red darken-4">Back to Beer Store</a>
             {% endif %}
-            </div>
+            
         </div>
     </div>
 {% endblock %}

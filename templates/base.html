@@ -53,17 +53,17 @@
                         <a class="dropdown-trigger" href="#" data-target="dropdown1"><i class="material-icons">person</i></a>
                     </li>
                     <li>
-                        <a class="{% if grand_total %} text-info font-weight-bold {% else %} text-black {% endif %} nav-link" href="{% url 'view_cart' %}">
+                        <a class="{% if grand_total %} text-blue {% else %} text-black {% endif %} nav-link" href="{% url 'view_cart' %}">
                             <div class="center">
                                 <div>
-                                    <i class="material-icons">shopping_basket</i>
-                                </div>
-                                <p class="my-0">
                                     {% if grand_total %}
-                                        £{{ grand_total|floatformat:2 }}
-                                    {% else %}
-                                    {% endif %}
-                                </p>
+                                        <i class="material-icons right">shopping_basket</i>
+                                            £{{ grand_total|floatformat:2 }}
+                                        {% else %}
+                                        <i class="material-icons">shopping_basket</i>
+                                        {% endif %}
+                                </div>
+                                
                             </div>
                         </a>
                     </li>

@@ -28,13 +28,26 @@ html {
 /*--------------------------------------------------------------------------------------------------beers page*/
 
 .btt-link {
-    height: 42px;
-    width: 42px;
+    height: 2.5rem;
+    width: 2.5rem;
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    bottom: 0.8rem;
+    right: 0.8rem;
     background-color: #fff;
     color: #000;
+}
+
+.btt-link:hover,
+.btn-link::after {
+    background-color: #b71c1c;
+    color: #fff;
+}
+
+.btt-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .star {
@@ -76,22 +89,38 @@ html {
     padding: 1rem 1rem;
 }
 
+.form-group .qty-select input {
+    border: none;
+    border-bottom: none;
+    font-family: 'Piazzolla', sans-serif;
+}
+
 .bd-btn {
     margin: 0.5rem 1rem;
-    width: 15rem;
-    background-color: #b71c1c;
+    width: 90%;
+    background-color: #b71c1c;    
+    font-family: 'Piazzolla', sans-serif;
 }
 
 .bd-btn:hover {
     background-color: #e53935;
 }
 
+.atc-btn {
+    height: 12vh;
+    background-color: #b71c1c;    
+    font-family: 'Piazzolla', sans-serif;
+}
+
+.atc-btn:hover {
+    background-color: #e53935;
+}
+
 
 /*--------------------------------------------------------------------------------------------------cart page*/
 
-.cart-container {
-    padding: 1rem;
-    align-content: center;
+.container .cart-container {
+    margin: 4rem 2rem;
 }
 
 /*---------------------------------------------------------------------------------------------------parallax*/
