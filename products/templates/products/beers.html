@@ -27,7 +27,7 @@
                 <ul id="dropdown3" class="dropdown-content">
                 
                     {% for style in styles %}
-                        <li><a href="{% url 'beers' %}?style={{ style.id }}" class="dropdown-item">{{ style.friendly_name }}</a></li>
+                        <li><a href="{% url 'beers' %}?style={{ style.friendly_name }}" class="dropdown-item">{{ style.friendly_name }}</a></li>
                     {% endfor %}
                 
                 </ul>   
@@ -39,7 +39,7 @@
                 <ul id="dropdown4" class="dropdown-content">
                 
                     {% for brewery in breweries %}
-                        <li><a href="{% url 'beers' %}?brewery={{ brewery.id }}" class="dropdown-item">{{ brewery.friendly_name }}({{ brewery.country }})</a></li>
+                        <li><a href="{% url 'beers' %}?brewery={{ brewery.friendly_name }}" class="dropdown-item">{{ brewery.friendly_name }}({{ beer.brewery.country }})</a></li>
                     {% endfor %}
                 
                 </ul>   
@@ -78,12 +78,12 @@
                             <img class="beer-display" src="{{ beer.image_url }}" alt="{{ beer.name }}">
                         </a>
                         {% else %}
-                            <img class="beer_display activator" src="{{ MEDIA_URL }}noimage.png" alt="{{ beer.name }}">
+                            <img class="beer_display" src="{{ MEDIA_URL }}noimage.png" alt="{{ beer.name }}">
                         {% endif %}
                         </div>
-                        <div class="activator card-content">
+                        <div class="card-content">
                             <a href="" class="red-text text-darken-4 material-icons activator right">more_vert</a>
-                            <a href="" class="activator card-title grey-text text-darken-4">{{ beer.name }}</a>                   
+                            <a href="{% url 'beer_detail' beer.id %}" class="card-title grey-text text-darken-4">{{ beer.name }}</a>                   
                             <p>{{ beer.abv }}%</p>
                             <p>{{ beer.volume }}ml</p>
                             <p>{{ beer.rating }}<i class="material-icons star">star</i></p>
@@ -93,10 +93,7 @@
                             <span class="card-title grey-text text-darken-4">{{ beer.brewery.friendly_name }}<i class="material-icons right">close</i></span>
                             <p>{{ beer.style.friendly_name }}</p>
                             <p>{{ beer.description }}</p>
-                            <div class="div center-align">
-                                <a class="beers-btn btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add_shopping_cart</i></a>
-                                <a href="{% url 'beer_detail' beer.id %}" class="beers-btn btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">info_outline</i></a>
-                            </div>
+                            
                         </div>                        
                     </div>
                 </div>  

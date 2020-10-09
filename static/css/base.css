@@ -123,8 +123,13 @@ html {
     margin: 4rem 2rem;
 }
 
+.cart-image {
+    height: 10vh;
+}
+
 .cart-link {
-    font-size: 1em;
+    font-size: 1rem;
+    margin-top: 0.8rem!important;
 }
 
 /*---------------------------------------------------------------------------------------------------parallax*/

@@ -22,18 +22,28 @@
                 <table class="striped">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Name</th>
                             <th>Brewery</th>
                             <th>Style</th>
                             <th>ABV.</th>
                             <th>Vol.</th>
                             <th>Quantity</th>
-                            <th>Price</th>                         
+                            <th>Sub-total</th>                         
                         </tr>
                     </thead>
                 {% for beer in cart_items %}
                     <tbody>
                         <tr>
+                            <td>
+                                <div class="center">
+                                    {% if beer.beer.image %}
+                                        <img class="cart-image" src="{{ beer.beer.image_url }}" alt="{{ beer.beer }}">
+                                    {% else %}
+                                        <img class="cart-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ beer.name }}">
+                                    {% endif %}
+                                </div>
+                            </td>
                             <td>{{ beer.beer }}</td>
                             <td>{{ beer.beer.brewery.friendly_name }}</td>
                             <td>{{ beer.beer.style.friendly_name }}</td>
@@ -54,11 +64,12 @@
                                                 </div>
                                             </div>
                                     </form>     
-                                    <a href="#" class="update-link submit cart-link green-text">update</a>
+                                    <a href="#" class="col update-link submit cart-link green-text"><i class="material-icons">update</i></a>
+                                    <a href="#" class="col remove-beer cart-link red-text" id="remove_{{ beer.beer.id }}" data-beer="{{ beer.beer.id }}"><i class="material-icons">delete_forever</i></a>
                                 </div> 
                                           
                             </td>
-                            <td>£{{ beer.beer.price }}</td>
+                            <td>£{{ total | floatformat:2 }}</td>
                         </tr>
                     </tbody>
                 {% endfor %}
@@ -73,4 +84,26 @@
         </div>
         {% include "includes/mobile_cart.html" %}
     </div>
+{% endblock %}
+
+{% block postloadjs %}
+<script type="text/javascript">
+    $('.update-link').click(function(e) {
+    var form = $(this).prev('.update-form');
+    form.submit();
+    })
+
+    // Remove item and reload on click
+    $('.remove-beer').click(function(e) {
+        var csrfToken = "{{ csrf_token }}";
+        var beerId = $(this).attr('id').split('remove_')[1];
+        var url = `/cart/remove/${beerId}/`;
+        var data = {'csrfmiddlewaretoken': csrfToken, 'beer': beerId};
+
+        $.post(url, data)
+        .done(function() {
+            location.reload();
+        });
+    })
+</script>
 {% endblock %}

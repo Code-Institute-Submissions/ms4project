@@ -49,15 +49,14 @@ def adjust_cart(request, beer_id):
 
 
 def remove_from_cart(request, beer_id):
-    """Remove the item from the shopping bag"""
+    """Remove the beer from the shopping cart"""
 
     try:
-        product = get_object_or_404(Beer, pk=beer_id)
-        cart = request.session.get('bag', {})
-
+        beer = get_object_or_404(Beer, pk=beer_id)
+        cart = request.session.get('cart', {})
         cart.pop(beer_id)
         messages.success(request,
-                         f'Removed {product.name} from your bag')
+                         f'Removed {beer.name} from your bag')
 
         request.session['cart'] = cart
         return HttpResponse(status=200)

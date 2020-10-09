@@ -5,8 +5,3 @@ $(document).ready(function(){
     $('.modal').modal();
     $('select').formSelect();
 });
-
-$('.update-link').click(function(e) {
-    var form = $(this).prev('.update-form');
-    form.submit();
-})

@@ -5,39 +5,48 @@
         <table class="stripped">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Name</th>
-                    <th>Style</th>
-                    <th>Quantity</th>
-                    <th>Price</th>                         
+                    <th>Quantity</th>  
+                    <th>Sub-total</th>                      
                 </tr>
             </thead>
             {% for beer in cart_items %}
             <tbody>
                 <tr>
+                    <td>
+                        <div class="center">
+                            {% if beer.beer.image %}
+                                <img class="cart-image" src="{{ beer.beer.image_url }}" alt="{{ beer.beer }}">
+                            {% else %}
+                                <img class="cart-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ beer.name }}">
+                            {% endif %}
+                        </div>
+                    </td>
                     <td>{{ beer.beer }}</td>
-                    <td>{{ beer.beer.style.friendly_name }}</td>
                     
                     <td class="center-align">
-                        <form class="row form update-form" method="POST" action="{% url 'adjust_cart' beer.beer_id %}">
-                            <div class=" col s6 form-group">
-                                <div class="qty-select">
-                                    <input class="form-control qty_input center-align" type="number"
-                                        name="quantity" value="{{ beer.quantity }}" min="1" max="99"
-                                        data-item_id="{{ beer.id }}"
-                                        id="id_qty_{{ beer.id }}">
-                                </div>
-                            </div>
-                            <div class="col s6">
-                                <div class="row">    
-                                    <a href="#" class="update-link small green-text">update</a>
-                                </div>
                                 <div class="row">
-                                    <a href="#" class="remove-item small red-text" id="remove_{{ beer.beer_id }}">remove</a>
-                                </div>
-                            </div> 
-                        </form>       
-                    </td>
-                    <td>£{{ beer.beer.price }}</td>
+                                    <form class="form col s6 update-form" method="POST" action="{% url 'adjust_cart' beer.beer_id %}">
+                                        {% csrf_token %}
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="qty-select">
+                                                        <input class="form-control qty_input center-align" type="number"
+                                                            name="quantity" value="{{ beer.quantity }}" min="0" max="99"
+                                                            data-item_id="{{ beer.id }}"
+                                                            id="id_qty_{{ beer.id }}"
+                                                            style="padding-top: 1rem;display: block;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </form>     
+                                    <a href="#" class="col update-link submit cart-link green-text"><i class="material-icons">update</i></a>
+                                    <a href="#" class="col remove-beer cart-link red-text" id="remove_{{ beer.beer.id }}" data-beer="{{ beer.beer.id }}"><i class="material-icons">delete_forever</i></a>
+                                </div> 
+                                          
+                            </td>
+                    <td>£{{ total | floatformat:2 }}</td>
                 </tr>
             </tbody>
             {% endfor %}
