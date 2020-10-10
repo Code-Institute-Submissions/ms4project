@@ -13,15 +13,18 @@ def view_cart(request):
 def add_to_cart(request, beer_id):
     ''' Add a quantity of a specifice beer to the cart '''
 
-    # beer = get_object_or_404(Beer, pk=item_id)
+    beer = get_object_or_404(Beer, pk=beer_id)
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
     cart = request.session.get('cart', {})
 
     if beer_id in list(cart.keys()):
         cart[beer_id] += quantity
+        messages.success(request, f'Updated {beer.name}\
+                                        quantity to {cart[beer_id]}')
     else:
         cart[beer_id] = quantity
+        messages.success(request, f'Added {beer.name} to your bag')
 
     request.session['cart'] = cart
     return redirect(redirect_url)
@@ -42,7 +45,7 @@ def adjust_cart(request, beer_id):
     else:
         cart.pop(beer_id)
         messages.success(request,
-                         f'Removed {beer.name} from your bag')
+                         f'Removed {beer.name} from your cart')
 
     request.session['cart'] = cart
     return redirect(reverse('view_cart'))
@@ -56,7 +59,7 @@ def remove_from_cart(request, beer_id):
         cart = request.session.get('cart', {})
         cart.pop(beer_id)
         messages.success(request,
-                         f'Removed {beer.name} from your bag')
+                         f'Removed {beer.name} from your cart')
 
         request.session['cart'] = cart
         return HttpResponse(status=200)

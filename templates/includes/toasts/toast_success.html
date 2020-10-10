@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<div class="toast custom-toast" data-autohide="false">
+    <div class="arrow-up arrow-success"></div>
+    <div class="toast-capper"></div>
+    <div class="toast-header row header white grey-text text-darken-4">
+        <h3 class="center-align col s12">Success!</h3>
+        <button type="button" class="btn btn-toast-close white right-align close black-text" data-dismiss="toast" aria-label="Close">
+            <i class="material-icons right">close</i>
+        </button>
+    </div>
+    <div class="toast-body black-text">
+        <div class="row">
+            <div class="col s12">
+                {{ message }}
+                <hr class="">
+            </div>
+        </div>
+        {% if grand_total %}
+            <div class="bag-notification-wrapper black-text">    
+                {% for beer in cart_items %}
+                    <div class="row">
+                        <div class="col s10 offset-s1">
+                            <p><b>{{ beer.beer }}:
+                            <span class="right">{{ beer.quantity }}</span>
+                            </b></p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            
+            <div class="row">
+                <div class="col s10 offset-s1">
+                    <b><p class="black-text">
+                    Total{% if free_delivery_delta > 0 %} (Exc. delivery){% endif %}:
+                    <span class="right">£{{ total|floatformat:2 }}</span>
+                    </p></b>
+                    {% if free_delivery_delta > 0 %}
+                        <p class="mb-0 p-2 red-text text-darken-4 black-text center-align">
+                            Spend <b>${{ free_delivery_delta }}</b> more to get free next day delivery!
+                        </p>
+                    {% endif %}
+                    <a href="{% url 'view_cart' %}" class="btn atc-btn">
+                        <span class="text-uppercase">Go To Secure Checkout</span>
+                        <span class="icon">
+                            <i class="material-icons">lock</i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
