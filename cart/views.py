@@ -20,8 +20,8 @@ def add_to_cart(request, beer_id):
 
     if beer_id in list(cart.keys()):
         cart[beer_id] += quantity
-        messages.success(request, f'Updated {beer.name}\
-                                        quantity to {cart[beer_id]}')
+        messages.success(request, f'You now have {cart[beer_id]}\
+                                    {beer.name} in  your cart')
     else:
         cart[beer_id] = quantity
         messages.success(request, f'Added {beer.name} to your bag')
@@ -40,8 +40,8 @@ def adjust_cart(request, beer_id):
     if quantity > 0:
         cart[beer_id] = quantity
         messages.success(request,
-                         f'Updated {beer.name}\
-                                 quantity to {cart[beer_id]}')
+                         f'You now have {cart[beer_id]}\
+                                    {beer.name} in  your cart')
     else:
         cart.pop(beer_id)
         messages.success(request,

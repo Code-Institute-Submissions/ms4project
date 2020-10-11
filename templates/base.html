@@ -94,12 +94,12 @@
         {% if messages %}
             <div class="message-container">
                 {% for message in messages %}
-                    {% with message.level as level %}
-                        {% if level == 40 %}
+                    {% with message.tags as tag %}
+                        {% if tag == 'error' %}
                             {% include 'includes/toasts/toast_error.html' %}
-                        {% elif level == 30 %}
+                        {% elif tag == 'warning' %}
                             {% include 'includes/toasts/toast_warning.html' %}
-                        {% elif level == 25 %}
+                        {% elif tag == 'success' %}
                             {% include 'includes/toasts/toast_success.html' %}
                         {% else %}
                             {% include 'includes/toasts/toast_info.html' %}

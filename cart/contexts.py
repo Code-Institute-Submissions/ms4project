@@ -8,6 +8,7 @@ def cart_contents(request):
 
     cart_items = []
     total = 0
+    quantity = 0
     beer_count = 0
     cart = request.session.get('cart', {})
 
@@ -22,22 +23,19 @@ def cart_contents(request):
                 'beer': beer,
             })
 
-    if total < settings.FREE_DELIVERY_THRESHOLD:
+    if quantity < 6:
         delivery = total * Decimal(settings.STANDARD_DELIVERY_PERCENTAGE / 100)
-        free_delivery_delta = settings.FREE_DELIVERY_THRESHOLD - total
     else:
         delivery = 0
-        free_delivery_delta = 0
 
     grand_total = delivery + total
 
     context = {
         'cart_items': cart_items,
+        'quantity': quantity,
         'total': total,
         'beer_count': beer_count,
         'delivery': delivery,
-        'free_delivery_delta': free_delivery_delta,
-        'free_delivery_threshold': settings.FREE_DELIVERY_THRESHOLD,
         'grand_total': grand_total,
     }
 

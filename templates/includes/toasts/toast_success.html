@@ -1,48 +1,78 @@
 <!DOCTYPE html>
 
-<div class="toast custom-toast" data-autohide="false">
-    <div class="arrow-up arrow-success"></div>
+<div class="toast" data-autohide="false">
     <div class="toast-capper"></div>
-    <div class="toast-header row header white grey-text text-darken-4">
-        <h3 class="center-align col s12">Success!</h3>
+    <div class="toast-header row grey-text text-darken-4">
+        <h4 class="center-align col s10">Success!</h4>
         <button type="button" class="btn btn-toast-close white right-align close black-text" data-dismiss="toast" aria-label="Close">
-            <i class="material-icons right">close</i>
+            <i class="material-icons red-text right">close</i>
         </button>
     </div>
-    <div class="toast-body black-text">
-        <div class="row">
+    <div class="toast-body green-text">
+        <div class="row center">
             <div class="col s12">
-                {{ message }}
-                <hr class="">
+                <h6>{{ message }}</h6>
+                <hr>
             </div>
         </div>
         {% if grand_total %}
-            <div class="bag-notification-wrapper black-text">    
+            <div class="bag-notification-wrapper row center black-text">    
                 {% for beer in cart_items %}
-                    <div class="row">
-                        <div class="col s10 offset-s1">
-                            <p><b>{{ beer.beer }}:
-                            <span class="right">{{ beer.quantity }}</span>
-                            </b></p>
+                    <div class="col s6">
+                    <div>
+                            {% if beer.beer.image %}
+                                <img class="cart-image" src="{{ beer.beer.image_url }}" alt="{{ beer.beer }}">
+                            {% else %}
+                                <img class="cart-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ beer.name }}">
+                            {% endif %}
+                        </div>
+                        <div>
+                            <form class="form update-form" method="POST" action="{% url 'adjust_cart' beer.beer_id %}">
+                                {% csrf_token %}
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="qty-select">
+                                                <input class="form-control qty_input center-align" type="number"
+                                                    name="quantity" value="{{ beer.quantity }}" min="0" max="99"
+                                                    data-item_id="{{ beer.id }}"
+                                                    id="id_qty_{{ beer.id }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                            </form>     
+                            <a href="#" class="update-link submit cart-link green-text"><i class="small material-icons">update</i></a>
+                            <a href="#" class="remove-beer cart-link red-text" id="remove_{{ beer.beer.id }}" data-beer="{{ beer.beer.id }}"><i class="small material-icons">delete_forever</i></a>
                         </div>
                     </div>
+            
                 {% endfor %}
-
+                
             </div>
             
             <div class="row">
                 <div class="col s10 offset-s1">
-                    <b><p class="black-text">
-                    Total{% if free_delivery_delta > 0 %} (Exc. delivery){% endif %}:
-                    <span class="right">£{{ total|floatformat:2 }}</span>
-                    </p></b>
-                    {% if free_delivery_delta > 0 %}
-                        <p class="mb-0 p-2 red-text text-darken-4 black-text center-align">
-                            Spend <b>${{ free_delivery_delta }}</b> more to get free next day delivery!
+                <hr>
+                {% if cart_items %}
+                    {% if beer_count < 6 %}
+                    <b><h6 class="black-text">
+                        Sub-total
+                    <span class="right"><b>£{{ total|floatformat:2 }}</b></span>
+                    </h6></b>
+                        <p class="red-text text-darken-4 center-align">
+                            Buy 6 of your favourite beers for free delivery!
+                        </p>
+                    {% else %}
+                    <b><h6 class="black-text">
+                        Total
+                    <span class="right"><b>£{{ total|floatformat:2 }}</b></span>
+                    </h6></b>
+                        <p class="blue-text text-darken-4 center-align">
+                            Free delivery on this order!
                         </p>
                     {% endif %}
-                    <a href="{% url 'view_cart' %}" class="btn atc-btn">
-                        <span class="text-uppercase">Go To Secure Checkout</span>
+                {% endif %}
+                    <a href="{% url 'view_cart' %}" class="center bd-btn red darken-4 btn-large">
+                        <span class="text-uppercase">Checkout</span>
                         <span class="icon">
                             <i class="material-icons">lock</i>
                         </span>
@@ -52,6 +82,26 @@
         {% endif %}
     </div>
 </div>
-
+{% block postloadjs %}
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $('.update-link').click(function(e) {
+    var form = $(this).prev('.update-form');
+    form.submit();
+    })
+
+    // Remove item and reload on click
+    $('.remove-beer').click(function(e) {
+        var csrfToken = "{{ csrf_token }}";
+        var beerId = $(this).attr('id').split('remove_')[1];
+        var url = `/cart/remove/${beerId}/`;
+        var data = {'csrfmiddlewaretoken': csrfToken, 'beer': beerId};
+
+        $.post(url, data)
+        .done(function() {
+            location.reload();
+        });
+    })
+</script>
+{% endblock %}
