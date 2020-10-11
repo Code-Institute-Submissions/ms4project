@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'products',
     'cart',
     'checkout',
+    'material'
 ]
 
 MIDDLEWARE = [

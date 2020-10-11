@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% include 'material/includes/material_css.html' %}
+{% include 'material/includes/material_js.html' %}
+{% load material_form %}
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}"/>
+{% endblock %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container center-align">
+        <div class="row">
+            <h2 class="header center-align">Checkout</h2>   
+            <hr>                     
+        </div>
+        <div class="row cart-container">
+            <p class="grey-text">You're almost done, just fill out the form below to complete your order</p>
+            <form method="POST">
+                {% csrf_token %}    
+                {% form %}
+                    {% part form.username prefix %}<i class="material-icons prefix">account_box</i>{% endpart %}
+                    {% part form.email prefix %}<i class="material-icons prefix">email</i>{% endpart %}
+                    {% part form.password prefix %}<i class="material-icons prefix">lock_open</i>{% endpart %}
+                {% endform %}
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
