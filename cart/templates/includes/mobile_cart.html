@@ -51,11 +51,16 @@
             </tbody>
             {% endfor %}
         </table>
-        <h6 class="right-align">Delivery = £{{ delivery | floatformat:2 }}</h6>
-        <h5 class="right-align">Total = <b>£{{ grand_total | floatformat:2 }}</b></h5>
-        {% else %}                
-            <h4 class="">Your cart is empty.</h4>
-            <a href="{% url 'beers' %}" class="btn large red darken-4">Back to Beer Store</a>
+        {% if beer_count < 6 %}
+            <h6 class="right-align">Sub-total = £{{ total | floatformat:2 }}</h6>
+            <h6 class="right-align">Delivery = £{{ delivery | floatformat:2 }}</h6>
+        {% else %}
+            <h6 class="right-align">Deliver is free with this order</h6>
         {% endif %}
+        <h5 class="right-align">Total = <b>£{{ grand_total | floatformat:2 }}</b></h5>
+    {% else %}                
+        <h4 class="">Your cart is empty.</h4>
+        <a href="{% url 'beers' %}" class="btn large red darken-4">Back to Beer Store</a>
+    {% endif %}
             
-        </div>
+    </div>
