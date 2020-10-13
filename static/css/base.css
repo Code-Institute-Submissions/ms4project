@@ -181,7 +181,7 @@ i.right {
 }
 
 .atc-btn {
-    height: 12vh;
+    height: 7rem;
     background-color: #b71c1c;    
     font-family: 'Piazzolla', sans-serif;
 }
@@ -205,6 +205,18 @@ i.right {
     font-size: 1rem;
     margin-top: 0.8rem!important;
 }
+
+.cart-btn {
+    width: 14rem;
+    float: right;
+    margin: 0.5rem 0rem 0.5rem 1rem;
+    background-color: #b71c1c;
+}
+
+.bd-btn:hover {
+    background-color: #e53935;
+}
+
 
 /*---------------------------------------------------------------------------------------------------parallax*/
 

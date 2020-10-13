@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-{% include 'material/includes/material_css.html' %}
-{% include 'material/includes/material_js.html' %}
-{% load material_form %}
 
 {% extends 'base.html' %}
 {% load static %}
@@ -24,17 +21,125 @@
             <h2 class="header center-align">Checkout</h2>   
             <hr>                     
         </div>
-        <div class="row cart-container">
-            <p class="grey-text">You're almost done, just fill out the form below to complete your order</p>
-            <form method="POST">
-                {% csrf_token %}    
-                {% form %}
-                    {% part form.username prefix %}<i class="material-icons prefix">account_box</i>{% endpart %}
-                    {% part form.email prefix %}<i class="material-icons prefix">email</i>{% endpart %}
-                    {% part form.password prefix %}<i class="material-icons prefix">lock_open</i>{% endpart %}
-                {% endform %}
-                <button type="submit" class="btn">Submit</button>
+    </div>
+    <div class="row  hide-on-small-only">
+        <div class="col s12 col l4 offset-l1 cart-container">
+            <h4 class="center-align">Order Summary</h4>
+            {% if cart_items %}
+
+                <table class="striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Brewery</th>
+                            <th>Style</th>
+                            <th>ABV.</th>
+                            <th>Vol.</th>
+                            <th>Quantity</th>                        
+                        </tr>
+                    </thead>
+                {% for beer in cart_items %}
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="center">
+                                    {% if beer.beer.image %}
+                                        <img class="cart-image" src="{{ beer.beer.image_url }}" alt="{{ beer.beer }}">
+                                    {% else %}
+                                        <img class="cart-image" src="{{ MEDIA_URL }}noimage.png" alt="{{ beer.name }}">
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td>{{ beer.beer }}</td>
+                            <td>{{ beer.beer.brewery.friendly_name }}</td>
+                            <td>{{ beer.beer.style.friendly_name }}</td>
+                            <td>{{ beer.beer.abv }}%</td>
+                            <td>{{ beer.beer.volume }}ml</td>
+                            <td class="center-align">
+                                {{ beer.quantity }}
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endfor %}
+                </table>
+                {% if beer_count < 6 %}
+                    <h6 class="right-align">Sub-total = £{{ total | floatformat:2 }}</h6>
+                    <h6 class="right-align">Delivery = £{{ delivery | floatformat:2 }}</h6>
+                {% else %}
+                    <h6 class="right-align">Deliver is free with this order</h6>
+                {% endif %}
+                    <h5 class="right-align">Total = <b>£{{ grand_total | floatformat:2 }}</b></h5>
+            {% endif %}
+                <button href="{% url 'view_cart' %}" class="btn right ac-btn">
+                    <i class="material_icons right"></i>
+                    <span class="font-weight-bold">Adjust Cart</span>
+                </button>
+        </div>     
+
+        <div class="col s12 col l5 offset-l1">
+            <p class="center"><b>Please fill out the form below to complete your order</b></p>
+            <form action="{% url 'checkout' %}" method="post" id="payment-form">
+                {% csrf_token %}
+                <fieldset class="co-fieldset">
+                    <legend class="fieldset-label small">Details</legend>
+                    {{ order_form.full_name | as_crispy_field }}
+                    {{ order_form.email | as_crispy_field }}
+                </fieldset>
+                <fieldset class="co-fieldset">
+                    <legend class="fieldset-label small">Delivery</legend>
+                    {{ order_form.phone_number | as_crispy_field }}
+                    {{ order_form.street_address1 | as_crispy_field }}
+                    {{ order_form.street_address2 | as_crispy_field }}
+                    {{ order_form.town_or_city | as_crispy_field }}
+                    {{ order_form.county | as_crispy_field }}
+                    {{ order_form.postcode | as_crispy_field }}
+                    {{ order_form.country | as_crispy_field }}
+                    <div class="form-check right">
+                        {% if user.is_authenticated %}
+                            <label class="form-check-label" for="id-save-info">Save this delivery information to my profile</label>
+                            <input class="form-check-input" type="checkbox" id="id-save-info" name="save-info" checked>
+                        {% else %}
+                            <label class="form-check-label" for="id-save-info">
+                                <a class="blue-text" href="{% url 'account_signup' %}">Create an account</a> or 
+                                <a class="blue-info" href="{% url 'account_login' %}">login</a> to save this information
+                            </label>
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <fieldset class="co-fieldset-bottom">
+                    <legend class="fieldset-label small black-text">Payment</legend>
+                    <div>
+                        <!-- A Stripe Element will be inserted here. -->
+                        <div class="" id="card-element"></div>
+                        <!-- Used to display form errors. -->
+                        <div class=" red-text" id="card-errors" role="alert"></div>
+                        <!-- Pass the stripe client_secret along so the payment intent id can be added to the order -->
+                        <input type="hidden" value="{{ client_secret }}" name="client_secret">
+                    </div>
+                </fieldset>
+
+                <div class="center-align">                    
+                    <button id="submit-button" class="btn co-btn">
+                        <span class="font-weight-bold">Complete Order</span>
+                        <i class="material-icons right">lock</i>
+                    </button>
+                </div>
+                <div class="right-align">
+                    <p class="small red-text">
+                        <i class="material-icons right">error_outline</i>
+                        Your card will be charged <strong>£{{ grand_total|floatformat:2 }}</strong>
+                    </p>
+                </div>
             </form>
         </div>
     </div>
+    {% include "includes/mobile_checkout.html" %}
+{% endblock %}
+
+{% block postloadjs %}
+    {{ block.super }}
+    {{ stripe_public_key|json_script:'id_stripe_public_key' }}
+    {{ client_secret|json_script:'id_client_secret' }}
+    <script src="{% static 'checkout/js/stripe-elements.js' %}"> </script>
 {% endblock %}

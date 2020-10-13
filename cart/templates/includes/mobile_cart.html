@@ -62,5 +62,8 @@
         <h4 class="">Your cart is empty.</h4>
         <a href="{% url 'beers' %}" class="btn large red darken-4">Back to Beer Store</a>
     {% endif %}
-            
+        <a href="{% url 'checkout' %}" class="center cart-btn red darken-4 btn-large">
+            <span>Checkout</span>
+            <i class="material-icons">lock</i>
+        </a>            
     </div>

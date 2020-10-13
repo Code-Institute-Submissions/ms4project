@@ -42,11 +42,16 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
+    # project apps
     'home',
     'products',
     'cart',
     'checkout',
-    'material'
+
+    # others
+    'crispy_forms',
+    'crispy_forms_materialize',
 ]
 
 MIDDLEWARE = [
@@ -61,6 +66,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'hits_n_hops.urls'
 
+CRISPY_TEMPLATE_PACK = 'materialize_css_forms'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -74,9 +81,14 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.media',
                 'django.contrib.messages.context_processors.messages',
                 'cart.contexts.cart_contents',
             ],
+            'builtins': [
+                'crispy_forms.templatetags.crispy_forms_tags',
+                'crispy_forms.templatetags.crispy_forms_field'
+            ]
         },
     },
 ]
@@ -164,3 +176,9 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media'),
 
 STANDARD_DELIVERY_PERCENTAGE = 10
+
+# stripe
+STRIPE_CURRENCY = 'gbp'
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
+STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET_test', '')

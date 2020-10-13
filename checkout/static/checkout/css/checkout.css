@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Piazzolla:wght@300;400;700&family=Sansita+Swashed:wght@300;400;700&display=swap');
+
+html {
+    font-family: 'Piazzolla', sans-serif;
+    height: 100%;
+    color: #444;
+}
+
+.cart-image {
+    height: 9vh;
+}
+
+.StripeElement,
+.stripe-style-input {
+	box-sizing: border-box;
+	height: 40px;
+	padding: 10px 12px;
+	border: None;
+	background-color: white;
+	box-shadow: 0 1px 3px 0 #e6ebf1;
+	-webkit-transition: box-shadow 150ms ease;
+	transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus,
+.stripe-style-input:focus,
+.stripe-style-input:active {
+	box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--webkit-autofill {
+	background-color: #fefde5 !important;
+}
+
+.fieldset-label {
+	position: relative;
+	right: .5rem;
+}
+
+.stripe-style-input::placeholder {
+	color: #aab7c4;
+}
+
+#payment-form .form-control,
+#card-element {
+	color: #000;
+	border: 1px solid #000;
+}
+
+select,
+select option {
+  color: #000000;
+}
+
+select:invalid,
+select option[value=""] {
+  color: #aab7c4 !important;
+}
+
+.co-btn {
+    margin: 0.5rem 1rem;
+    width: 80%;
+    background-color: #b71c1c;    
+    font-family: 'Piazzolla', sans-serif;
+}
+
+.co-btn:hover {
+    background-color: #e53935;
+}
+
+.ac-btn {
+    margin: 0.5rem 1rem;
+    background-color: #b71c1c;    
+    font-family: 'Piazzolla', sans-serif;
+}
+
+.co-btn:hover {
+    background-color: #e53935;
+}
+
+fieldset {
+    border: None;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
+form {
+    align-content: center;
+}
+
+nav i, nav [class^="mdi-"], nav [class*="mdi-"], nav i.material-icons {
+    color: #444;
+}

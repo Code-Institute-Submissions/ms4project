@@ -83,7 +83,12 @@
                     <h4 class="">Your cart is empty.</h4>
                     <a href="{% url 'beers' %}" class="btn large red darken-4">Back to Beer Store</a>
             {% endif %}
-            
+            {% if cart_items %}
+            <a href="{% url 'checkout' %}" class="center cart-btn red darken-4 btn-large">
+                <span>Checkout</span>
+                <i class="material-icons right">lock</i>
+            </a>
+            {% endif %}
         </div>
         {% include "includes/mobile_cart.html" %}
     </div>
