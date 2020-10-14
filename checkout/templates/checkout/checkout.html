@@ -22,8 +22,8 @@
             <hr>                     
         </div>
     </div>
-    <div class="row  hide-on-small-only">
-        <div class="col s12 col l4 offset-l1 cart-container">
+    <div class="row cart-container hide-on-small-only">
+        <div class="col s12 col l5 offset-l1 cart-container">
             <h4 class="center-align">Order Summary</h4>
             {% if cart_items %}
 
@@ -71,13 +71,13 @@
                 {% endif %}
                     <h5 class="right-align">Total = <b>£{{ grand_total | floatformat:2 }}</b></h5>
             {% endif %}
-                <button href="{% url 'view_cart' %}" class="btn right ac-btn">
-                    <i class="material_icons right"></i>
+                <a href="{% url 'view_cart' %}" class="btn right ac-btn">
+                    <i class="material-icons right">shopping_cart</i>
                     <span class="font-weight-bold">Adjust Cart</span>
-                </button>
+                </a>
         </div>     
 
-        <div class="col s12 col l5 offset-l1">
+        <div class="col s12 col l5 checkout-container">
             <p class="center"><b>Please fill out the form below to complete your order</b></p>
             <form action="{% url 'checkout' %}" method="post" id="payment-form">
                 {% csrf_token %}
@@ -119,9 +119,9 @@
                     </div>
                 </fieldset>
 
-                <div class="center-align">                    
+                <div class="center-align submit-button">                    
                     <button id="submit-button" class="btn co-btn">
-                        <span class="font-weight-bold">Complete Order</span>
+                        <span>Checkout sercurely</span>
                         <i class="material-icons right">lock</i>
                     </button>
                 </div>

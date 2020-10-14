@@ -28,18 +28,18 @@ class Order(models.Model):
                                       null=False, default=0)
 
     def _generate_order_number(self):
-        ''' Generate a random, unique order number using UUID '''
+        ''' generate a random order number(UUID) '''
 
         return uuid.uuid4().hex.upper()
 
     def update_total(self, *args, **kwargs):
-        """ Updare grand total each time a line item is added,
+        """ update grand total each time line item is added,
             accounting for delivery costs. """
         self.order_total = self.lineitem.aggregate(Sum(
-                            'lineitem_total'))['lineitem_total_sum']
-        if self.order_total < settings.FREE_DELIVERY_THRESHOLD:
-            self.delivery_cost = self.order_total * settings.\
-                                    STANDARD_DELIVERY_PERCENTAGE / 100
+                            'lineitem_total'))['lineitem_total_sum'] or 0
+        if self.beer_count < 6:
+            self.delivery_cost = self.order_total *\
+                settings.STANDARD_DELIVERY_PERCENTAGE / 100
         else:
             self.delivery_cost = 0
         self.grand_total = self.order_total + self.delivery_cost
@@ -70,7 +70,7 @@ class OrderLineItem(models.Model):
         """ Override the default save method to set the order number
         if it hasn't been set already. """
 
-        self.lieitem_total = self.beer.price * self.quantity
+        self.lineitem_total = self.beer.price * self.quantity
         super().save(*args, **kwargs)
 
     def __str__(self):

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}"/>
+{% endblock %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container center-align">
+        <div class="row">
+            <h2 class="header center-align">Thank You {{ order.full_name }}</h2>   
+            <p>Your order({{ order.order_number }}) has been processed. A confirmation email will be sent to <b>{{ order.email }}</b>.</p>
+            <p>Please see your order information below.</p>
+            <hr>  
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+    </div>
+{% endblock %}

@@ -3,11 +3,25 @@
 html {
     font-family: 'Piazzolla', sans-serif;
     height: 100%;
-    color: #444;
 }
 
 .cart-image {
     height: 9vh;
+}
+
+nav ul a,
+nav .brand-logo {
+    color: #444;
+}
+
+.row {
+    margin: 0;
+}
+
+@media only screen and (min-width: 950px) {
+    .checkout-container {
+        border-left: 1px solid #444;
+    }
 }
 
 .StripeElement,
@@ -74,7 +88,7 @@ select option[value=""] {
     font-family: 'Piazzolla', sans-serif;
 }
 
-.co-btn:hover {
+.ac-btn:hover {
     background-color: #e53935;
 }
 

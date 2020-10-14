@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, reverse, HttpResponse
+from django.shortcuts import render, redirect, reverse, HttpResponse,\
+    get_object_or_404
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.conf import settings
@@ -54,22 +55,21 @@ def checkout(request):
         if order_form.is_valid():
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
-            order.original_bag = json.dumps(cart)
+            order.original_cart = json.dumps(cart)
             order.stripe_pid = pid
             order.save()
             for item_id, quantity in cart.items():
                 try:
                     beer = Beer.objects.get(id=item_id)
-                    if isinstance(quantity, int):
-                        order_line_item = OrderLineItem(
-                            order=order,
-                            beer=beer,
-                            quantity=quantity,
-                        )
-                        order_line_item.save()
+                    order_line_item = OrderLineItem(
+                        order=order,
+                        beer=beer,
+                        quantity=quantity,
+                    )
+                    order_line_item.save()
                 except Beer.DoesNotExist:
                     messages.error(request, (
-                        "One of the products in your bag wasn't\
+                        "One of the products in your cart wasn't\
                          found in our database. "
                         "Please call us for assistance!")
                     )
@@ -134,18 +134,18 @@ def checkout(request):
 
 def checkout_success(request, order_number):
     """
-    Handle successful checkouts
+    handle successful checkouts
     """
     save_info = request.session.get('save_info')
-    order = Order.objects.get(order_number=order_number)
+    order = get_object_or_404(Order, order_number=order_number)
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
-        # Attach the user's profile to the order
+        # attach profile to order
         order.user_profile = profile
         order.save()
 
-        # Save the user's info
+        # save user's info
         if save_info:
             profile_data = {
                 'default_phone_number': order.phone_number,
@@ -160,12 +160,12 @@ def checkout_success(request, order_number):
             if user_profile_form.is_valid():
                 user_profile_form.save()
 
-    messages.success(request, f'Order successfully processed! \
-        Your order number is {order_number}. A confirmation \
+    messages.success(request, f'Order successfully processed!\
+        Your order number is {order_number}. A confirmation\
         email will be sent to {order.email}.')
 
-    if 'bag' in request.session:
-        del request.session['bag']
+    if 'cart' in request.session:
+        del request.session['cart']
 
     template = 'checkout/checkout_success.html'
     context = {
