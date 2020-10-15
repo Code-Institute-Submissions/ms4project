@@ -14,7 +14,7 @@ import stripe
 import json
 
 
-@require_POST
+'''@require_POST
 def cache_checkout_data(request):
     pid = request.POST.get('client_secret').split('_secret')[0]
     stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -28,13 +28,12 @@ def cache_checkout_data(request):
     except Exception as e:
         messages.error(request, 'Sorry, your payment cannot be processed \
             right now. Please try again later.')
-        return HttpResponse(content=e, status=400)
+        return HttpResponse(content=e, status=400)'''
 
 
 def checkout(request):
-
-    stripe_secret_key = settings.STRIPE_SECRET_KEY
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
 
     if request.method == 'POST':
         cart = request.session.get('cart', {})
@@ -53,7 +52,7 @@ def checkout(request):
 
         order_form = OrderForm(form_data)
         if order_form.is_valid():
-            order = order_form.save(commit=False)
+            order = order_form.save()
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.original_cart = json.dumps(cart)
             order.stripe_pid = pid
@@ -70,7 +69,7 @@ def checkout(request):
                 except Beer.DoesNotExist:
                     messages.error(request, (
                         "One of the products in your cart wasn't\
-                         found in our database. "
+                         found in our databse. "
                         "Please call us for assistance!")
                     )
                     order.delete()
@@ -99,7 +98,7 @@ def checkout(request):
         )
 
         # Attempt to prefill the form from info in their user profile
-        if request.user.is_authenticated:
+        '''if request.user.is_authenticated:
             try:
                 profile = UserProfile.objects.get(user=request.user)
                 order_form = OrderForm(initial={
@@ -115,8 +114,8 @@ def checkout(request):
                 })
             except UserProfile.DoesNotExist:
                 order_form = OrderForm()
-        else:
-            order_form = OrderForm()
+        else:'''
+        order_form = OrderForm()
 
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. \
@@ -139,7 +138,7 @@ def checkout_success(request, order_number):
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
 
-    if request.user.is_authenticated:
+    '''if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
         # attach profile to order
         order.user_profile = profile
@@ -158,11 +157,10 @@ def checkout_success(request, order_number):
             }
             user_profile_form = UserProfileForm(profile_data, instance=profile)
             if user_profile_form.is_valid():
-                user_profile_form.save()
+                user_profile_form.save()'''
 
     messages.success(request, f'Order successfully processed!\
-        Your order number is {order_number}. A confirmation\
-        email will be sent to {order.email}.')
+        A confirmation email will be sent to {order.email}.')
 
     if 'cart' in request.session:
         del request.session['cart']

@@ -20,6 +20,8 @@ class Order(models.Model):
     street_address2 = models.CharField(max_length=80, null=True, blank=True)
     county = models.CharField(max_length=80, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
+    total_quantity = models.DecimalField(max_digits=6, decimal_places=0,
+                                         null=False, default=0)
     delivery_cost = models.DecimalField(max_digits=6, decimal_places=2,
                                         null=False, default=0)
     order_total = models.DecimalField(max_digits=10, decimal_places=2,
@@ -35,9 +37,12 @@ class Order(models.Model):
     def update_total(self, *args, **kwargs):
         """ update grand total each time line item is added,
             accounting for delivery costs. """
+        self.total_quantity = self.lineitem.aggregate(Sum(
+                            'quantity'))['quantity__sum']\
+            or 0
         self.order_total = self.lineitem.aggregate(Sum(
-                            'lineitem_total'))['lineitem_total_sum'] or 0
-        if self.beer_count < 6:
+                            'lineitem_total'))['lineitem_total__sum'] or 0
+        if self.total_quantity < 6:
             self.delivery_cost = self.order_total *\
                 settings.STANDARD_DELIVERY_PERCENTAGE / 100
         else:
@@ -57,10 +62,10 @@ class Order(models.Model):
 
 
 class OrderLineItem(models.Model):
-    order = models.ForeignKey(Order, null=False, blank=False,
+    order = models.ForeignKey(Order, null=True, blank=False,
                               on_delete=models.CASCADE,
                               related_name='lineitem')
-    beer = models.ForeignKey(Beer, null=False, blank=False,
+    beer = models.ForeignKey(Beer, null=True, blank=False,
                              on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False)
     lineitem_total = models.DecimalField(max_digits=6, decimal_places=2,
