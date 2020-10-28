@@ -8,6 +8,7 @@ from .forms import OrderForm
 from .models import Order, OrderLineItem
 
 from products.models import Beer
+from profiles.models import UserProfile
 from cart.contexts import cart_contents
 
 import stripe
@@ -98,7 +99,7 @@ def checkout(request):
         )
 
         # Attempt to prefill the form from info in their user profile
-        '''if request.user.is_authenticated:
+        if request.user.is_authenticated:
             try:
                 profile = UserProfile.objects.get(user=request.user)
                 order_form = OrderForm(initial={
@@ -114,8 +115,8 @@ def checkout(request):
                 })
             except UserProfile.DoesNotExist:
                 order_form = OrderForm()
-        else:'''
-        order_form = OrderForm()
+        else:
+            order_form = OrderForm()
 
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. \

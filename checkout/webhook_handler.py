@@ -5,7 +5,7 @@ from django.conf import settings
 
 from checkout.models import Order, OrderLineItem
 from products.models import Beer
-# from profiles.models import UserProfile
+from profiles.models import UserProfile
 
 import json
 import time
@@ -98,7 +98,7 @@ class StripeWH_Handler:
                     original_cart=cart,
                     stripe_pid=pid,
                 )
-                order_exists = True  # Nothing else to do if order is already created
+                order_exists = True  # Nothing to do if order already created
                 break
             except Order.DoesNotExist:
                 attempt += 1
@@ -107,11 +107,12 @@ class StripeWH_Handler:
             # Send a confirmation email
             self._send_confirmation_email(order)
             return HttpResponse(
-                content=f'Webhook received: {event["type"]} | SUCCESS: Verified order already in database',
+                content=f'Webhook received: {event["type"]} |\
+                    SUCCESS: Verified order already in database',
                 status=200)
         else:
             order = None
-            # If somehow the form didn't create the order, try to create it here
+            # If somehow the form didn't create the order, try create it here
             try:
                 order = Order.objects.create(
                     full_name=shipping_details.name,
