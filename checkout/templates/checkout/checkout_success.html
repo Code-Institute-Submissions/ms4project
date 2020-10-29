@@ -53,7 +53,7 @@
 					{% for beer in order.lineitems %}
 						<div class="row">
 							<div class="col s12 m8">
-								<p class="small mb-0 text-black font-weight-bold">{{ beer.beer }} - {{beer.brewery}}</p>
+								<p class="small mb-0 text-black font-weight-bold">{{ beer.beer }} - {{ beer.brewery }}</p>
 							</div>
 							<div class="col s12 m8 right-align">
 								<p>{{ beer.quantity }} @ £{{ beer.beer.price }} each</p>

@@ -94,8 +94,10 @@
                     {{ order_form.country | as_crispy_field }}
                     <div class="form-check right">
                         {% if user.is_authenticated %}
-                            <label class="form-check-lable" for="id-save-info">Save this delivery information to my profile</label>
-                            <input class="form-check-input" type="checkbox" id="id-save-info" name="save-info" checked>
+                            <label class="form-check-label" for="id-save-info">
+                                <input class="form-check-input" type="checkbox" id="id-save-info" name="save-info" checked>
+                                <span>Save this delivery information to my profile</span>
+                            </label>
                         {% else %}
                             <label class="form-check-label" for="id-save-info">
                                 <a class="blue-text" href="{% url 'account_signup' %}">Create an account</a> or 

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends "account/base.html" %}
 
 {% load i18n %}
@@ -6,18 +7,19 @@
 
 {% block inner %}
 <h2 class="header center">{% trans "Verify Your E-mail Address" %}</h2>
+<hr>
 
 {% url 'account_email' as email_url %}
 
-<p>{% blocktrans %}This part of the site requires us to verify that
+<p class="center">{% blocktrans %}This part of the site requires us to verify that
 you are who you claim to be. For this purpose, we require that you
 verify ownership of your e-mail address. {% endblocktrans %}</p>
 
-<p>{% blocktrans %}We have sent an e-mail to you for
+<p class="center">{% blocktrans %}We have sent an e-mail to you for
 verification. Please click on the link inside this e-mail. Please
 contact us if you do not receive it within a few minutes.{% endblocktrans %}</p>
 
-<p>{% blocktrans %}<strong>Note:</strong> you can still <a href="{{ email_url }}">change your e-mail address</a>.{% endblocktrans %}</p>
+<p class="center">{% blocktrans %}<strong>Note:</strong> you can still <a href="{{ email_url }}">change your e-mail address</a>.{% endblocktrans %}</p>
 
 
 {% endblock %}

@@ -1,0 +1,1 @@
+Hits 'n' Hops confirmation for order number {{ order.order_number }}
