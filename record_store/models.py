@@ -14,7 +14,7 @@ class Record(models.Model):
                         size=50, max_length=(60 * 60))
     description = models.TextField(max_length=500)
     album_art = models.CharField(max_length=254, default="")
+    label = models.CharField(max_length=254, default="")
 
     def __str__(self):
         return self.title
-

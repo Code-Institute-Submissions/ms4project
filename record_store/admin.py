@@ -11,7 +11,8 @@ class RecordAdmin(admin.ModelAdmin):
         'genre',
         'track_listing',
         'description',
-        'album_art'
+        'album_art',
+        'label'
     )
 
 

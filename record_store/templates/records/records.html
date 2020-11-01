@@ -11,7 +11,7 @@
         </div>
 
 
-<!--  -----------------------------------------------------------------------------------------------BEER LIST-->
+<!--  -----------------------------------------------------------------------------------------------RECORD LIST-->
 
         <div class="row">
             {% for record in records %}
@@ -19,17 +19,18 @@
                     <div class="large card">
                         <div class="card-image waves-effect waves-block waves-light">
                         {% if record.album_art %}
-                        <a href="{% url 'record_details' record.id %}">
-                            <img class="beer-display" src="{{ record.album_art }}" alt="{{ beer.name }}">
+                        <a href="#">
+                            <img class="record-display" src="{{ record.album_art }}" alt="{{ record.title }}">
                         </a>
                         {% else %}
-                            <img class="beer_display" src="{{ MEDIA_URL }}noimage.png" alt="{{ beer.name }}">
+                            <img class="record-display" src="{{ MEDIA_URL }}noimage.png" alt="{{ record.title }}">
                         {% endif %}
                         </div>
                         <div class="card-content">
-                            <a href="{% url 'record_detail' beer.id %}" class="card-title grey-text text-darken-4">{{ record.title }}</a>                   
+                            <a href="#" class="card-title grey-text text-darken-4">{{ record.title }}</a>                   
                             <p>{{ record.artist }}</p>
                             <p>{{ record.genre }}</p>
+                            <p>{{ record.label }}</p>
                             <p>{{ record.year }}</p>
                         </div>                                           
                     </div>
@@ -38,7 +39,7 @@
         </div>
 
         
-<!--  -----------------------------------------------------------------------------------------------/BEER LIST-->
+<!--  -----------------------------------------------------------------------------------------------/RECORD LIST-->
 
         <hr>  
     </div>

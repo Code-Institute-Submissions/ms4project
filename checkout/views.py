@@ -9,6 +9,7 @@ from .models import Order, OrderLineItem
 
 from products.models import Beer
 from profiles.models import UserProfile
+from profiles.forms import UserProfileForm
 from cart.contexts import cart_contents
 
 import stripe
@@ -60,7 +61,7 @@ def checkout(request):
             order.save()
             for item_id, quantity in cart.items():
                 try:
-                    beer = Beer.objects.get(id=item_id)
+                    beer = get_object_or_404(Beer, id=item_id)
                     order_line_item = OrderLineItem(
                         order=order,
                         beer=beer,
@@ -136,10 +137,10 @@ def checkout_success(request, order_number):
     """
     handle successful checkouts
     """
-    # save_info = request.session.get('save_info')
+    save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number)
 
-    '''if request.user.is_authenticated:
+    if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
         # attach profile to order
         order.user_profile = profile
@@ -158,7 +159,7 @@ def checkout_success(request, order_number):
             }
             user_profile_form = UserProfileForm(profile_data, instance=profile)
             if user_profile_form.is_valid():
-                user_profile_form.save()'''
+                user_profile_form.save()
 
     messages.success(request, f'Order successfully processed!\
         A confirmation email will be sent to {order.email}.')
@@ -172,3 +173,4 @@ def checkout_success(request, order_number):
     }
 
     return render(request, template, context)
+

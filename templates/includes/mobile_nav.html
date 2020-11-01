@@ -8,13 +8,16 @@
             <a class="dropdown-trigger text-black" href="#" data-target="dropdown2"><i class="material-icons">person</i>My Account</a>
         </li>
         <li>
+            <a href="{% url 'records' %}"><i class="material-icons">album</i>Record Collection</a>
+        </li>
+        <li>
             <a href="{% url 'beers' %}"><i class="material-icons">store</i>Beer Store</a>
         </li>
         <li>
             <a class="{% if grand_total %} blue-text {% endif %} nav-link" href="{% url 'view_cart' %}">
                 {% if grand_total %}
                     <i class="material-icons left">shopping_basket</i>
-                        £{{ grand_total|floatformat:2 }}
+                        £{{ total|floatformat:2 }}
                     {% else %}
                         <i class="material-icons left">shopping_basket</i>Shopping Cart
                     {% endif %}

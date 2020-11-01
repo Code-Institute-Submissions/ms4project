@@ -10,4 +10,4 @@ def all_records(request):
         'records': records
     }
 
-    return render(request, 'products/records.html', context)
+    return render(request, 'records/records.html', context)
