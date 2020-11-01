@@ -5,13 +5,31 @@ from django.db.models import Q
 from .models import Beer, Style, Brewery
 
 
+def all_breweries(request):
+    breweries = Brewery.objects.all()
+
+    context = {
+        'breweries': breweries
+    }
+    return render(request, 'products/breweries.html', context)
+
+
+def all_styles(request):
+    styles = Style.objects.all()
+
+    context = {
+        'styles': styles
+    }
+    return render(request, 'products/styles.html', context)
+
+
 def all_beers(request):
     ''' A view to return beers, including sorting and search queries '''
 
     beers = Beer.objects.all()
     query = None
-    style = None
-    brewery = None
+    styles = None
+    breweries = None
     sort = None
     direction = None
     sortkey = None
@@ -33,14 +51,14 @@ def all_beers(request):
             beers = beers.order_by(sortkey)
 
         if 'brewery' in request.GET:
-            brewery = request.GET['brewery'].split(',')
-            beers = beers.filter(brewery__name__in=brewery)
-            brewery = Brewery.objects.filter(name_in=brewery)
+            breweries = request.GET['brewery'].split(',')
+            beers = beers.filter(brewery__name__in=breweries)
+            breweries = Brewery.objects.filter(name__in=breweries)
 
         if 'style' in request.GET:
-            style = request.GET['style'].split(',')
-            beers = beers.filter(style__name__in=style)
-            style = Style.objects.filter(name_in=style)
+            styles = request.GET['style'].split(',')
+            beers = beers.filter(style__name__in=styles)
+            styles = Style.objects.filter(name__in=styles)
 
         if 'q' in request.GET:
             query = request.GET['q']
@@ -58,8 +76,8 @@ def all_beers(request):
     context = {
         'beers': beers,
         'search_term': query,
-        'style': style,
-        'brewery': brewery,
+        'current_styles': styles,
+        'current_breweries': breweries,
         'current_sorting': current_sorting,
     }
 

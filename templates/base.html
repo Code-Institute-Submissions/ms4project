@@ -41,6 +41,9 @@
                 </a>
                 <ul class="right hide-on-small-only">
                     <li>
+                        <a href="{% url 'records' %}"><i class="material-icons">album</i></a>
+                    </li>
+                    <li>
                         <a href="{% url 'beers' %}"><i class="material-icons">store</i></a>
                     </li>
                     <li>
@@ -55,12 +58,12 @@
                         <a class="dropdown-trigger" href="#" data-target="dropdown1"><i class="material-icons">person</i></a>
                     </li>
                     <li>
-                        <a class="{% if grand_total %} text-blue {% else %} text-black {% endif %} nav-link" href="{% url 'view_cart' %}">
+                        <a class="{% if grand_total %} blue-text {% endif %} nav-link" href="{% url 'view_cart' %}">
                             <div class="center">
                                 <div>
                                     {% if grand_total %}
                                         <i class="material-icons right">shopping_basket</i>
-                                            £{{ grand_total|floatformat:2 }} -
+                                            £{{ grand_total|floatformat:2 }}...
                                         {% else %}
                                         <i class="material-icons">shopping_basket</i>
                                         {% endif %}
@@ -143,7 +146,7 @@
         </div>
     </footer>
 
-        {% block postloadjs %}
-        {% endblock %}
+    {% block postloadjs %}
+    {% endblock %}
     </body>
 </html>

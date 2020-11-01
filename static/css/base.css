@@ -13,12 +13,15 @@ html {
 .container {
     max-width: 100vw;
     padding: 0 4rem;
+    width: auto;
 }
+
 
 .dropdown-content {
     width: 15rem!important; 
     height: inherit!important;
     top: -4rem;
+    color: #444;
 }
 
 .header-container {
@@ -268,7 +271,7 @@ p {
     font-size: inherit;
 }
 
-footer .page-footer {
+.page-footer .container {
     margin: 0;
 }
 

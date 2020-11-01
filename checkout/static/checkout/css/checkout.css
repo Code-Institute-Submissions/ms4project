@@ -6,6 +6,10 @@ html {
     color: #444;
 }
 
+.header {
+    font-family: 'Sansita Swashed', sans-serif;
+}
+
 .cart-image {
     height: 9vh;
 }

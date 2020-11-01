@@ -8,13 +8,61 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container center-align">
-        <div class="row">
-            <h2 class="header center-align">My Profile</h2>   
+    <div class="row">
+        <div class="col s10 offset-s1">
+            <h2 class="header center">My Profile</h2>   
             <hr>                     
-        </div>
     </div>
-    <div class="center row profile-container">
-        {{ profile }}
+    <div class="profile-container">
+        <div class="center row">
+            <div class="col s10 offset-s1 m5 offset-m1">
+                <h6>Delivery Information</h6>
+                <form action="{% url 'profile' %}" method="POST" id="update-profile-form">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="mp-btn btn" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+        <div class="center row">
+            <div class="col s10 offset-s1 m5">
+                <h6>Order History</h6>
+                <table>
+                    
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Beers</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>
+                                <a href="#" title="{{ order.order_number }}">{{ order.order_number|truncatechars:10 }}</a>
+                            </td>
+                            <td>
+                                <ul>
+                                    {% for beers in order.lineitems.all %}
+                                        
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                {{ order.date }}
+                            </td>
+                            <td>
+                                {{ order.grand_total }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
     </div>
 {% endblock %}

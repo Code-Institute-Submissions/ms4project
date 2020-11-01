@@ -49,10 +49,12 @@ INSTALLED_APPS = [
     'cart',
     'checkout',
     'profiles',
+    'record_store',
 
     # others
     'crispy_forms',
     'crispy_forms_materialize',
+    'django_mysql',
 ]
 
 MIDDLEWARE = [

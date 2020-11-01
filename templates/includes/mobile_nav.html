@@ -11,7 +11,7 @@
             <a href="{% url 'beers' %}"><i class="material-icons">store</i>Beer Store</a>
         </li>
         <li>
-            <a class="{% if grand_total %} text-blue font-weight-bold {% else %} text-black {% endif %} nav-link" href="{% url 'view_cart' %}">
+            <a class="{% if grand_total %} blue-text {% endif %} nav-link" href="{% url 'view_cart' %}">
                 {% if grand_total %}
                     <i class="material-icons left">shopping_basket</i>
                         £{{ grand_total|floatformat:2 }}
@@ -37,7 +37,7 @@
                 {% if request.user.is_superuser %}
                     <a href="" class="dropdown-item">Product Management</a>
                 {% endif %}
-                <a href="" class="dropdown-item">My Profile</a>
+                <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
                 <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
             {% else %}
                 <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>

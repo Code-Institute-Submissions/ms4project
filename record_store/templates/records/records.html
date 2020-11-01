@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<a name="top"></a>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h2 class="header center-align">Our Record Collection</h2>   
+            <hr>                     
+        </div>
+
+
+<!--  -----------------------------------------------------------------------------------------------BEER LIST-->
+
+        <div class="row">
+            {% for record in records %}
+                <div class="col s12 m6 l4 xl3">
+                    <div class="large card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                        {% if record.album_art %}
+                        <a href="{% url 'record_details' record.id %}">
+                            <img class="beer-display" src="{{ record.album_art }}" alt="{{ beer.name }}">
+                        </a>
+                        {% else %}
+                            <img class="beer_display" src="{{ MEDIA_URL }}noimage.png" alt="{{ beer.name }}">
+                        {% endif %}
+                        </div>
+                        <div class="card-content">
+                            <a href="{% url 'record_detail' beer.id %}" class="card-title grey-text text-darken-4">{{ record.title }}</a>                   
+                            <p>{{ record.artist }}</p>
+                            <p>{{ record.genre }}</p>
+                            <p>{{ record.year }}</p>
+                        </div>                                           
+                    </div>
+                </div>  
+            {% endfor %}
+        </div>
+
+        
+<!--  -----------------------------------------------------------------------------------------------/BEER LIST-->
+
+        <hr>  
+    </div>
+<a href="#" class=" btn btt-link"><i class="material-icons btt-icon">arrow_upward</i></a>
+{% endblock %}

@@ -58,12 +58,12 @@
             <h6 class="right-align">Deliver is free with this order</h6>
         {% endif %}
         <h5 class="right-align">Total = <b>£{{ grand_total | floatformat:2 }}</b></h5>
-    {% else %}                
-        <h4 class="">Your cart is empty.</h4>
-        <a href="{% url 'beers' %}" class="btn large red darken-4">Back to Beer Store</a>
-    {% endif %}
         <a href="{% url 'checkout' %}" class="center cart-btn red darken-4 btn-large">
             <span>Checkout</span>
             <i class="material-icons">lock</i>
-        </a>            
+        </a> 
+    {% else %}                
+        <h4 class="">Your cart is empty.</h4>
+        <a href="{% url 'beers' %}" class="btn large red darken-4">Back to Beer Store</a>
+    {% endif %}           
     </div>
