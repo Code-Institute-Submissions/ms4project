@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -66,7 +67,7 @@ class StripeWH_Handler:
         profile = None
         username = intent.metadata.username
         if username != "AnonymousUser":
-            profile = UserProfile.objects.get(user__username=username)
+            profile = get_object_or_404(UserProfile, user__username=username)
             if save_info:
                 profile.default_phone_number = shipping_details.phone
                 profile.default_country = shipping_details.address.country

@@ -102,7 +102,7 @@ def checkout(request):
         # Attempt to prefill the form from info in their user profile
         if request.user.is_authenticated:
             try:
-                profile = UserProfile.objects.get(user=request.user)
+                profile = get_object_or_404(UserProfile, user=request.user)
                 order_form = OrderForm(initial={
                     'full_name': profile.user.get_full_name(),
                     'email': profile.user.email,
@@ -141,7 +141,7 @@ def checkout_success(request, order_number):
     order = get_object_or_404(Order, order_number=order_number)
 
     if request.user.is_authenticated:
-        profile = UserProfile.objects.get(user=request.user)
+        profile = get_object_or_404(UserProfile, user=request.user)
         # attach profile to order
         order.user_profile = profile
         order.save()
@@ -173,4 +173,3 @@ def checkout_success(request, order_number):
     }
 
     return render(request, template, context)
-

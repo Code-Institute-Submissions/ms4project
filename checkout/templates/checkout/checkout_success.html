@@ -9,6 +9,16 @@
 
 {% block content %}
     <div class="container center-align">
+    {% if from_profile %}    
+        <div class="row">
+            <h2 class="header center">Order History</h2>   
+            <h5 class="header center">{{ order.full_name }}</h5>
+            <p>Your order({{ order.order_number }}) was processed succesfully.</p>
+            <p> A confirmation email was sent to <b>{{ order.email }}</b>.</p>
+            <p>Please see your order information below.</p>
+            <hr>  
+        </div>
+    {% else %}
         <div class="row">
             <h2 class="header center">Thank You</h2>   
             <h5 class="header center">{{ order.full_name }}</h5>
@@ -17,6 +27,7 @@
             <p>Please see your order information below.</p>
             <hr>  
         </div>
+    {% endif %}
     </div>
     <div class="row">
             <div class="col s10 offset-s1 m8 offset-m2">
@@ -51,13 +62,13 @@
 							<h5>Order Details:</h5>
 						</div>
 					</div>
-					{% for beer in orders.lineitems.all %}
+					{% for item in order.lineitems.all %}
 						<div class="row">
-							<div class="col s12 m8">
-								<p class="black-text">{{ beer.beer.name }} - {{ beer.brewery.friendly_name }}</p>
+							<div class="col s12 m4">
+								<p class="black-text"><b>{{ item.beer.name }} ({{ item.beer.brewery.friendly_name }})</b></p>
 							</div>
-							<div class="col s12 m8 right">
-								<p>{{ beer.quantity }} @ £{{ beer.beer.price }} each</p>
+							<div class="col s12 m8 right-align">
+								<p>{{ item.quantity }} @ £{{ item.beer.price }} each</p>
 							</div>
 						</div>
 					{% endfor %}
@@ -188,7 +199,11 @@
             </div> 
             <div class="row">
                 <div class="col s10 offset-s1 m4 offset-m4">
+                {% if from_profile %}
+                    <a href="{% url 'profile' %}" class="truncate btn large cos-btn waves-effect waves-light"><i class="material-icons right">store</i>back to profile</a>
+                {% else %}
                     <a href="{% url 'beers' %}" class="truncate btn large cos-btn waves-effect waves-light"><i class="material-icons right">store</i>back to store</a>
+                {% endif %}
                 </div>
             </div>    
 		</div>

@@ -29,3 +29,8 @@ html {
 .mp-btn:hover {
     background-color: #e53935;
 }
+
+.oh-container {
+    max-height: 80vh;
+    overflow-y: scroll;
+}

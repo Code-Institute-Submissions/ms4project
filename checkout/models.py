@@ -60,8 +60,8 @@ class Order(models.Model):
         self.save()
 
     def save(self, *args, **kwargs):
-        """ Override the default save method to set the order number
-        if it hasn't been set already. """
+        """Override the default save method to set the order number
+        if it hasn't been set already."""
         if not self.order_number:
             self.order_number = self._generate_order_number()
         super().save(*args, **kwargs)
@@ -73,7 +73,7 @@ class Order(models.Model):
 class OrderLineItem(models.Model):
     order = models.ForeignKey(Order, null=True, blank=False,
                               on_delete=models.CASCADE,
-                              related_name='lineitem')
+                              related_name='lineitems')
     beer = models.ForeignKey(Beer, null=True, blank=False,
                              on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False)
