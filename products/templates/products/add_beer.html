@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container center-align">
+        <div class="row">
+            <h2 class="header center-align">Product Management</h2>   
+            <h4 class="header center-align">Add Beer</h4>
+            <hr>                     
+        </div>
+    </div>
+    <div class="add-beer-container">
+        <div class="row">
+            <div class="col s10 offset-s1 m5 offset-m1">
+                <form method="POST" action="{% url 'add_beer' %}" class="form" enctype="multipart/form-data">
+                    {% csrf_token %} 
+                    {{ form | crispy}}
+                    <div class="center-align submit-button">                    
+                        <button id="submit-button" class="btn bd-btn">
+                            <span>Add Beer</span>
+                            <i class="material-icons right">add</i>
+                        </button>
+                        <a href="{% url 'beers' %}" class="btn bd-btn">
+                            <span>Back to beer store</span>
+                            <i class="material-icons right">store</i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="col s10 offset-s1 m5 offset-m1">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

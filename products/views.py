@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.db.models.functions import Lower
 from django.db.models import Q
 from .models import Beer, Style, Brewery
+from .forms import BeerForm
 
 
 def all_breweries(request):
@@ -94,3 +95,14 @@ def beer_detail(request, beer_id):
     }
 
     return render(request, 'products/beer_detail.html', context)
+
+
+def add_beer(request):
+    ''' Add a beer to the store'''
+    form = BeerForm()
+    template = 'products/add_beer.html'
+    context = {
+        'form': form,
+    }
+
+    return render(request, template, context)

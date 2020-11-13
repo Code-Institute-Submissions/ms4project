@@ -108,6 +108,15 @@ i.right {
     padding:.75rem
 }
 
+/*--------------------------------------------------------------------------------------------------add beer page*/
+
+textarea {
+    border-bottom: 1px #444 solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
 /*--------------------------------------------------------------------------------------------------beers page*/
 
 .btt-link {

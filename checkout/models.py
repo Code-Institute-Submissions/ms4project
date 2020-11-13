@@ -46,10 +46,9 @@ class Order(models.Model):
     def update_total(self, *args, **kwargs):
         """ update grand total each time line item is added,
             accounting for delivery costs. """
-        self.total_quantity = self.lineitem.aggregate(Sum(
-                            'quantity'))['quantity__sum']\
-            or 0
-        self.order_total = self.lineitem.aggregate(Sum(
+        self.total_quantity = self.lineitems.aggregate(Sum(
+                            'quantity'))['quantity__sum'] or 0
+        self.order_total = self.lineitems.aggregate(Sum(
                             'lineitem_total'))['lineitem_total__sum'] or 0
         if self.total_quantity < 6:
             self.delivery_cost = self.order_total *\

@@ -48,7 +48,7 @@ class StripeWH_Handler:
         Handle the "payment_intent.succeeded" webhook from Stripe
         """
 
-        # Get the payment intent and metadata
+        # Get payment intent and metadata
         intent = event.data.object
         pid = intent.id
         cart = intent.metadata.cart
@@ -146,7 +146,7 @@ class StripeWH_Handler:
                     content=f'Webhook received: {event["type"]} | ERROR: {e}',
                     status=500)
         # Send a confirmation email
-        # self._send_confirmation_email(order)
+        self._send_confirmation_email(order)
         return HttpResponse(
                 content=f'Webhook received: {event["type"]} |\
                     SUCCESS: Created order in webhook',
