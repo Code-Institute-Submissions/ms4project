@@ -98,11 +98,46 @@ def beer_detail(request, beer_id):
 
 
 def add_beer(request):
-    ''' Add a beer to the store'''
-    form = BeerForm()
+    ''' Add a beer to the store '''
+    if request.method == 'POST':
+        form = BeerForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Added beer to store!')
+            return redirect(reverse('add_beer'))
+        else:
+            messages.error(request,
+                           'Beer not added, please check form and try again.')
+    else:
+        form = BeerForm()
+
     template = 'products/add_beer.html'
     context = {
         'form': form,
+    }
+
+    return render(request, template, context)
+
+
+def edit_beer(request, beer_id):
+    ''' edit a beer form the store '''
+    beer = get_object_or_404(Beer, pk=beer_id)
+    if request.method == 'POST':
+        form = BeerForm(request.POST, request.FILES, instance=beer)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Beer update successful!')
+            return redirect(reverse('beer_detail', args=[beer.id]))
+        else:
+            messages.error(request, 'Update failed, please try again.')
+    else:
+        form = BeerForm(instance=beer)
+        messages.info(request, f'Currently editing {beer.name}')
+
+    template = 'products/edit_beer.html'
+    context = {
+        'form': form,
+        'beer': beer,
     }
 
     return render(request, template, context)

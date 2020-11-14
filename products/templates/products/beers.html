@@ -20,7 +20,7 @@
                 <div class="input-field col s12">
                     <ul id="dropdown3" class="dropdown-content">
                     
-                        {% for style in styles %}
+                        {% for style in current_styles %}
                             <li><a href="{% url 'beers' %}?styles={{ style.friendly_name }}" class="dropdown-item">{{ style.friendly_name }}</a></li>
                         {% endfor %}
                 
@@ -34,7 +34,7 @@
                 <div class="input-field col s12">
                     <ul id="dropdown4" class="dropdown-content">
                     
-                        {% for brewery in breweries %}
+                        {% for brewery in current_breweries %}
                             <li><a href="{% url 'beers' %}?breweries={{ brewery.friendly_name }}" class="dropdown-item">{{ brewery.friendly_name }}({{ brewery.country }})</a></li>
                         {% endfor %}
                     
