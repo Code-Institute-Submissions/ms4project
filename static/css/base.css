@@ -156,8 +156,12 @@ textarea {
 }
 
 .beer-display {
-    height: 18rem;
+    height: 19rem;
     object-fit: contain
+}
+
+.card.large {
+    height: 525px;
 }
 
 .beers-btn {

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db.models.functions import Lower
 from django.db.models import Q
 from .models import Beer, Style, Brewery
@@ -97,14 +98,19 @@ def beer_detail(request, beer_id):
     return render(request, 'products/beer_detail.html', context)
 
 
+@login_required
 def add_beer(request):
+    if not request.user.is_superuser:
+        messages.error(request,
+                       'Sorry, you are not authorised to edit beer collection')
+        return redirect(reverse('beers'))
     ''' Add a beer to the store '''
     if request.method == 'POST':
         form = BeerForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            beer = form.save()
             messages.success(request, 'Added beer to store!')
-            return redirect(reverse('add_beer'))
+            return redirect(reverse('beer_detail', args=[beer.id]))
         else:
             messages.error(request,
                            'Beer not added, please check form and try again.')
@@ -119,8 +125,13 @@ def add_beer(request):
     return render(request, template, context)
 
 
+@login_required
 def edit_beer(request, beer_id):
     ''' edit a beer form the store '''
+    if not request.user.is_superuser:
+        messages.error(request,
+                       'Sorry, you are not authorised to edit beer collection')
+        return redirect(reverse('beers'))
     beer = get_object_or_404(Beer, pk=beer_id)
     if request.method == 'POST':
         form = BeerForm(request.POST, request.FILES, instance=beer)
@@ -141,3 +152,17 @@ def edit_beer(request, beer_id):
     }
 
     return render(request, template, context)
+
+
+@login_required
+def delete_beer(request, beer_id):
+    ''' remove beer from store '''
+    if not request.user.is_superuser:
+        messages.error(request,
+                       'Sorry, you are not authorised to edit collection')
+        return redirect(reverse('beers'))
+
+    beer = get_object_or_404(Beer, pk=beer_id)
+    beer.delete()
+    messages.success(request, 'Beer removed from store')
+    return redirect(reverse('beers'))

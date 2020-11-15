@@ -85,6 +85,12 @@
                             <p>{{ beer.volume }}ml</p>
                             <p>{{ beer.rating }}<i class="material-icons star">star</i></p>
                             <p><b>£{{ beer.price }}</b></p>
+                            {% if request.user.is_superuser %}
+                                <div class="right">
+                                    <a href="{% url 'edit_beer' beer.id %}" ><i class="small green-text material-icons">edit</i></a>
+                                    <a href="{% url 'delete_beer' beer.id %}" ><i class=" small red-text material-icons">delete</i></a>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4">{{ beer.brewery.friendly_name }}<i class="material-icons right">close</i></span>
