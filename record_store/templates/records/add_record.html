@@ -7,20 +7,20 @@
     <div class="container center-align">
         <div class="row">
             <h2 class="header center-align">Product Management</h2>   
-            <h4 class="header center-align">Edit Record</h4>
+            <h4 class="header center-align">Add Record</h4>
             <hr>                     
         </div>
     </div>
     <div class="add-beer-container">
         <div class="row">
             <div class="col s10 offset-s1 m6 offset-m3">
-                <form method="POST" action="{% url 'edit_record' %}" class="form" enctype="multipart/form-data">
+                <form method="POST" action="{% url 'add_record' %}" class="form" enctype="multipart/form-data">
                     {% csrf_token %} 
                     {{ form | crispy}}
                     <div class="center-align submit-button">                    
                         <button id="submit-button" class="btn bd-btn">
-                            <span>Update Record</span>
-                            <i class="material-icons right">update</i>
+                            <span>Add Record</span>
+                            <i class="material-icons right">add</i>
                         </button>
                         <a href="{% url 'records' %}" class="btn bd-btn">
                             <span>Back to record collection</span>

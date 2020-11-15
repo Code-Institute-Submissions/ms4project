@@ -27,9 +27,9 @@ def add_record(request):
     if request.method == 'POST':
         form = RecordForm(request.POST, request.FILES)
         if form.is_valid():
-            record = form.save()
+            form.save()
             messages.success(request, 'Added record to store!')
-            return redirect(reverse('record', args=[record.id]))
+            return redirect(reverse('records'))
         else:
             messages.error(request,
                            'Record not added, please try again.')
@@ -58,7 +58,7 @@ def edit_record(request, record_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Record update successful!')
-            return redirect(reverse('records', args=[record.id]))
+            return redirect(reverse('records'))
         else:
             messages.error(request, 'Update failed, please try again.')
     else:
@@ -81,7 +81,7 @@ def delete_record(request, record_id):
     if not request.user.is_superuser:
         messages.error(request,
                        'Sorry, you are not authorised to edit collection')
-        return redirect(reverse('record'))
+        return redirect(reverse('records'))
 
     record = get_object_or_404(Record, pk=record_id)
     record.delete()

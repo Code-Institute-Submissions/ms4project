@@ -12,42 +12,65 @@
 
 
 <!--  -----------------------------------------------------------------------------------------------RECORD LIST-->
-
-        <div class="row">
-            {% for record in records %}
-                <div class="col s12 m6 l4 xl3">
-                    <div class="large card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                        {% if record.album_art %}
-                        <a href="#">
-                            <img class="record-display" src="{{ record.album_art }}" alt="{{ record.title }}">
-                        </a>
-                        {% else %}
-                            <img class="record-display" src="{{ MEDIA_URL }}noimage.png" alt="{{ record.title }}">
-                        {% endif %}
+    
+        <ul class="collapsible">
+        {% for record in records %}
+            <li>
+                <div class="collapsible-header"><i class="material-icons">album</i><b>{{ record.title }}</b> - {{ record.artist }}</div>
+                <div class="collapsible-body">
+                    <span class="row">
+                        <div class="col s12 m3">
+                            <div class="record-image waves-effect waves-block waves-light">
+                            {% if record.album_art %}
+                            <a href="#">
+                                <img class="center record-display" src="{{ record.album_art }}" alt="{{ record.title }}">
+                            </a>
+                            {% else %}
+                                <img class="center record-display" src="{{ MEDIA_URL }}noimage.png" alt="{{ record.title }}">
+                            {% endif %}
+                            </div>
                         </div>
-                        <div class="card-content">
-                            <a href="#" class="card-title grey-text text-darken-4">{{ record.title }}</a>                   
+                        <div class="col s12 m3">
+                            <a href="#" class="title grey-text text-darken-4">{{ record.title }}</a>                   
                             <p>{{ record.artist }}</p>
                             <p>{{ record.genre }}</p>
                             <p>{{ record.label }}</p>
-                            <p>{{ record.year }}</p>
-                            {% if request.user.is_superuser %}
-                                <div class="right">
-                                    <a href="{% url 'edit_record' record.id %}" ><i class="small green-text material-icons">edit</i></a>
-                                    <a href="{% url 'delete_record' record.id %}" ><i class=" small red-text material-icons">delete</i></a>
-                                </div>
-                            {% endif %}
-                        </div>                                           
-                    </div>
-                </div>  
-            {% endfor %}
-        </div>
+                            <p>{{ record.year }}</p>                                           
+                        </div>  
+                        <div class="col s12 m6">
+                            <div>                  
+                                <p>{{ record.description }}</p>
+                            </div> 
+                            <div class="col m2">
+                                {% if request.user.is_superuser %}
+                                    <div class="right">
+                                        <a href="{% url 'edit_record' record.id %}" ><i class="small green-text material-icons">edit</i></a>
+                                        <a href="{% url 'delete_record' record.id %}" ><i class=" small red-text material-icons">delete</i></a>
+                                    </div>
+                                {% endif %}            
+                            </div>                             
+                        </div>
+                    </span>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+
+    
 
         
 <!--  -----------------------------------------------------------------------------------------------/RECORD LIST-->
 
-        <hr>  
+        <hr>
     </div>
+
 <a href="#" class=" btn btt-link"><i class="material-icons btt-icon">arrow_upward</i></a>
+{% endblock %}
+
+{% block postloadjs %}
+    <script>
+        $(document).ready(function(){
+            $('.collapsible').collapsible();
+        });
+    </script>
 {% endblock %}
