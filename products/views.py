@@ -104,6 +104,7 @@ def add_beer(request):
         messages.error(request,
                        'Sorry, you are not authorised to edit beer collection')
         return redirect(reverse('beers'))
+
     ''' Add a beer to the store '''
     if request.method == 'POST':
         form = BeerForm(request.POST, request.FILES)
@@ -132,6 +133,7 @@ def edit_beer(request, beer_id):
         messages.error(request,
                        'Sorry, you are not authorised to edit beer collection')
         return redirect(reverse('beers'))
+
     beer = get_object_or_404(Beer, pk=beer_id)
     if request.method == 'POST':
         form = BeerForm(request.POST, request.FILES, instance=beer)

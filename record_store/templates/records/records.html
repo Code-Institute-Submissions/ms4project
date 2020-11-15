@@ -32,6 +32,12 @@
                             <p>{{ record.genre }}</p>
                             <p>{{ record.label }}</p>
                             <p>{{ record.year }}</p>
+                            {% if request.user.is_superuser %}
+                                <div class="right">
+                                    <a href="{% url 'edit_record' record.id %}" ><i class="small green-text material-icons">edit</i></a>
+                                    <a href="{% url 'delete_record' record.id %}" ><i class=" small red-text material-icons">delete</i></a>
+                                </div>
+                            {% endif %}
                         </div>                                           
                     </div>
                 </div>  
